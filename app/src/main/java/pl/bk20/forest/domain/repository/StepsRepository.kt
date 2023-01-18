@@ -1,11 +1,12 @@
 package pl.bk20.forest.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.domain.model.Steps
 import java.time.LocalDate
 
 interface StepsRepository {
 
-    suspend fun getSteps(date: LocalDate): Steps?
+    fun getSteps(date: LocalDate): Flow<Steps?>
 
     suspend fun insertSteps(steps: Steps)
 }
