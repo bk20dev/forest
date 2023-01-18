@@ -1,6 +1,5 @@
 package pl.bk20.forest.data.repository
 
-import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.data.source.StepsDao
 import pl.bk20.forest.domain.model.Steps
 import pl.bk20.forest.domain.repository.StepsRepository
@@ -10,11 +9,11 @@ class StepsRepositoryImpl(
     private val dao: StepsDao
 ) : StepsRepository {
 
-    override fun getSteps(date: LocalDate): Flow<Steps?> {
+    override suspend fun getSteps(date: LocalDate): Steps? {
         return dao.getSteps(date)
     }
 
-    override suspend fun updateSteps(steps: Steps) {
-        return dao.updateSteps(steps)
+    override suspend fun insertSteps(steps: Steps) {
+        dao.insertSteps(steps)
     }
 }
