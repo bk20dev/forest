@@ -6,5 +6,6 @@ class StepsUseCases(
     repository: StepsRepository
 ) {
 
+    val getSteps: GetSteps = GetStepsImpl(repository)
     val incrementStepCount: IncrementStepCount = IncrementStepCountImpl(repository)
 }
