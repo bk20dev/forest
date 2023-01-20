@@ -20,21 +20,27 @@ class MainViewModel(
     private val stepsUseCases: StepsUseCases
 ) : ViewModel() {
 
-    private val _steps = MutableStateFlow(MainState(0, 10000))
+    private val _steps = MutableStateFlow(MainState(LocalDate.now(), 0, 10000))
     val steps: StateFlow<MainState> = _steps.asStateFlow()
 
     private var getStepsJob: Job? = null
 
     init {
-        // TODO: Change the day on midnight
-        getSteps(LocalDate.now())
+        updateActiveDate(_steps.value.date)
+    }
+
+    fun updateActiveDate(date: LocalDate) {
+        getSteps(date)
     }
 
     private fun getSteps(date: LocalDate) {
         getStepsJob?.cancel()
         getStepsJob = stepsUseCases.getSteps(date).onEach {
             val newStepCount = it?.count ?: 0
-            _steps.value = steps.value.copy(stepCount = newStepCount)
+            _steps.value = steps.value.copy(
+                date = date,
+                stepCount = newStepCount
+            )
         }.launchIn(viewModelScope)
     }
 
