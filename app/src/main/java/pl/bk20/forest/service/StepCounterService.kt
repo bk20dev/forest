@@ -53,7 +53,6 @@ class StepCounterService : LifecycleService(), SensorEventListener {
             .build()
 
     private fun registerStepCounter(sensorManager: SensorManager) {
-        // TODO: Check for android.permission.ACTIVITY_RECOGNITION permission
         val stepCounterSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
         stepCounterSensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
