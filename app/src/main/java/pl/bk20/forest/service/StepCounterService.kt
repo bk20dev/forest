@@ -3,7 +3,9 @@ package pl.bk20.forest.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -18,6 +20,7 @@ import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.R
 import pl.bk20.forest.data.repository.StepsRepositoryImpl
 import pl.bk20.forest.domain.usecase.StepsUseCases
+import pl.bk20.forest.presentation.MainActivity
 import java.time.LocalDate
 
 class StepCounterService : LifecycleService(), SensorEventListener {
@@ -28,6 +31,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "step_counter_channel"
         private const val NOTIFICATION_ID = 0x1
+        private const val PENDING_INTENT_ID = 0x1
     }
 
     override fun onCreate() {
@@ -49,8 +53,16 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
     private fun createNotification(): Notification =
         NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            .setContentIntent(launchApplicationPendingIntent)
             .setOngoing(true)
             .build()
+
+    private val launchApplicationPendingIntent
+        get(): PendingIntent {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            return PendingIntent.getActivity(this, PENDING_INTENT_ID, intent, flags)
+        }
 
     private fun registerStepCounter(sensorManager: SensorManager) {
         val stepCounterSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
