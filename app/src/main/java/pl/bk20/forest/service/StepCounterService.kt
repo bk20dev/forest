@@ -42,7 +42,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         registerStepCounter(sensorManager)
-        val notification = createNotification()
+        val notification = createNotification(StepCounterState(0, 10000, 0f, 0))
         startForeground(NOTIFICATION_ID, notification)
         // Initialise controller
         val stepsDatabase = (application as ForestApplication).stepsDatabase
@@ -51,11 +51,21 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         controller = StepCounterController(useCases, lifecycleScope)
     }
 
-    private fun createNotification(): Notification =
-        NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+    private fun createNotification(state: StepCounterState): Notification = state.run {
+        val title = resources.getQuantityString(R.plurals.step_count, takenSteps, takenSteps)
+        val progress = takenSteps * 100 / dailyGoal
+        val content = getString(
+            R.string.step_counter_stats, calorieBurned, distanceTravelledInKm, progress
+        )
+
+        NotificationCompat.Builder(this@StepCounterService, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(launchApplicationPendingIntent)
+            .setSmallIcon(R.drawable.baseline_directions_walk_24)
+            .setContentTitle(title)
+            .setContentText(content)
             .setOngoing(true)
             .build()
+    }
 
     private val launchApplicationPendingIntent
         get(): PendingIntent {

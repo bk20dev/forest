@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Forest</string>
     <string name="step_counter_channel">Step counter</string>
+    <plurals name="step_count">
+        <item quantity="one">%d step today</item>
+        <item quantity="other">%d steps today</item>
+    </plurals>
+    <string name="step_counter_stats">%1$d kcal · %2$.2f km · %3$d%% of your daily goal</string>
 </resources>
