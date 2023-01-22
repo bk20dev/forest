@@ -2,10 +2,13 @@ package pl.bk20.forest.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        resizeProgressCircle()
+
         timer.start()
 
         lifecycleScope.launch {
@@ -44,6 +49,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         startStepCounterService()
+    }
+
+    private fun resizeProgressCircle() {
+        val parent = binding.progressIndicator.parent as View
+        parent.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                parent.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                binding.progressIndicator.apply {
+                    indicatorSize = parent.width
+                    updateLayoutParams {
+                        width = parent.width
+                        height = parent.width
+                    }
+                }
+            }
+        })
     }
 
     private fun startStepCounterService() {

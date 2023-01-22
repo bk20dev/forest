@@ -19,28 +19,29 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_indicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:progress="50"
+            app:indicatorInset="0dp"
+            app:indicatorSize="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showAnimationBehavior="outward"
+            app:trackColor="?attr/colorSurfaceVariant"
+            app:trackCornerRadius="6dp"
+            app:trackThickness="12dp" />
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/progress_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:progress="50"
-                app:indicatorSize="200dp"
-                app:trackColor="?attr/colorSurfaceVariant"
-                app:trackCornerRadius="6dp"
-                app:trackThickness="12dp" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
