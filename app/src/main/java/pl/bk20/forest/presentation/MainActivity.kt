@@ -1,8 +1,10 @@
 package pl.bk20.forest.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 import pl.bk20.forest.databinding.ActivityMainBinding
 import pl.bk20.forest.domain.util.MidnightTimer
 import pl.bk20.forest.domain.util.TimerImpl
+import pl.bk20.forest.service.StepCounterService
 import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +42,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        startStepCounterService()
+    }
+
+    private fun startStepCounterService() {
+        val intent = Intent(this, StepCounterService::class.java)
+        ContextCompat.startForegroundService(this, intent)
     }
 
     override fun onDestroy() {

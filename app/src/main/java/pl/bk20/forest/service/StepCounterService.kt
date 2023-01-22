@@ -14,12 +14,17 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.R
 import pl.bk20.forest.data.repository.StepsRepositoryImpl
 import pl.bk20.forest.domain.usecase.StepsUseCases
+import pl.bk20.forest.domain.util.MidnightTimer
+import pl.bk20.forest.domain.util.TimerImpl
 import pl.bk20.forest.presentation.MainActivity
 import java.time.LocalDate
 
@@ -34,6 +39,11 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         private const val PENDING_INTENT_ID = 0x1
     }
 
+    private val midnightTimer = MidnightTimer(TimerImpl()) {
+        val today = LocalDate.now()
+        controller.updateActiveDate(today)
+    }
+
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
@@ -42,13 +52,26 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         }
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         registerStepCounter(sensorManager)
-        val notification = createNotification(StepCounterState(0, 10000, 0f, 0))
-        startForeground(NOTIFICATION_ID, notification)
+
         // Initialise controller
         val stepsDatabase = (application as ForestApplication).stepsDatabase
         val stepsRepository = StepsRepositoryImpl(stepsDatabase.stepsDao)
         val useCases = StepsUseCases(stepsRepository)
         controller = StepCounterController(useCases, lifecycleScope)
+
+        // Create notification
+        val notification = createNotification(controller.steps.value)
+        startForeground(NOTIFICATION_ID, notification)
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                controller.steps.collect {
+                    val updatedNotification = createNotification(it)
+                    notificationManager.notify(NOTIFICATION_ID, updatedNotification)
+                }
+            }
+        }
     }
 
     private fun createNotification(state: StepCounterState): Notification = state.run {
@@ -63,6 +86,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
             .setSmallIcon(R.drawable.baseline_directions_walk_24)
             .setContentTitle(title)
             .setContentText(content)
+            .setOnlyAlertOnce(true)
             .setOngoing(true)
             .build()
     }
@@ -92,6 +116,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        midnightTimer.stop()
         sensorManager.unregisterListener(this)
     }
 
