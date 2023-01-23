@@ -6,11 +6,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.data.repository.StepsRepositoryImpl
 import pl.bk20.forest.domain.usecase.StepsUseCases
@@ -20,7 +16,7 @@ class MainViewModel(
     private val stepsUseCases: StepsUseCases
 ) : ViewModel() {
 
-    private val _steps = MutableStateFlow(MainState(LocalDate.now(), 0, 10000))
+    private val _steps = MutableStateFlow(MainState(LocalDate.now(), 0, 10000, 0f, 0))
     val steps: StateFlow<MainState> = _steps.asStateFlow()
 
     private var getStepsJob: Job? = null
@@ -39,7 +35,9 @@ class MainViewModel(
             val newStepCount = it?.count ?: 0
             _steps.value = steps.value.copy(
                 date = date,
-                stepCount = newStepCount
+                takenSteps = newStepCount,
+                distanceTravelledInKm = newStepCount * 7f / 10000, // 7 dm per step
+                calorieBurned = newStepCount / 25 // 0.04 (1/25) kcal per step
             )
         }.launchIn(viewModelScope)
     }

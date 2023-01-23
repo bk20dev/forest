@@ -4,6 +4,8 @@ import java.time.LocalDate
 
 data class MainState(
     val date: LocalDate,
-    val stepCount: Int,
-    val dailyGoal: Int
+    val takenSteps: Int,
+    val dailyGoal: Int,
+    val distanceTravelledInKm: Float,
+    val calorieBurned: Int
 )
