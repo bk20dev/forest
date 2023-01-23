@@ -63,6 +63,8 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         val notification = createNotification(controller.steps.value)
         startForeground(NOTIFICATION_ID, notification)
 
+        midnightTimer.start()
+
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
