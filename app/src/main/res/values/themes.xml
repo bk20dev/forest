@@ -2,8 +2,11 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Forest" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="alertDialogTheme">@style/Theme.Forest.MaterialAlertDialog</item>
+    </style>
+
+    <style name="Theme.Forest.MaterialAlertDialog" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">28dp</item>
     </style>
 
     <style name="Theme.Forest" parent="Base.Theme.Forest" />

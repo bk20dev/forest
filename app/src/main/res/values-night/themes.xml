@@ -2,7 +2,6 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Forest" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="alertDialogTheme">@style/Theme.Forest.MaterialAlertDialog</item>
     </style>
 </resources>

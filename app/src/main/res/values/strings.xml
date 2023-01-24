@@ -12,4 +12,14 @@
     <string name="steps_beyond_goal">%s beyond goal</string>
     <string name="kilometers_abbr">km</string>
     <string name="calorie_abbr">kcal</string>
+
+    <!-- Preferences -->
+    <string name="settings">Settings</string>
+    <string name="goals">Goals</string>
+    <string name="daily_goal">Daily goal</string>
+    <string name="advanced">Advanced</string>
+    <string name="step_length">Step length</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="pace">Pace</string>
 </resources>
