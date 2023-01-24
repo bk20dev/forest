@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity() {
         startStepCounterService()
     }
 
+    private fun startStepCounterService() {
+        val intent = Intent(this, StepCounterService::class.java)
+        ContextCompat.startForegroundService(this, intent)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
@@ -47,12 +52,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.settings -> TODO("Not implemented")
+        R.id.settings -> {
+            openSettings()
+            true
+        }
         else -> false
     }
 
-    private fun startStepCounterService() {
-        val intent = Intent(this, StepCounterService::class.java)
-        ContextCompat.startForegroundService(this, intent)
+    private fun openSettings() {
+        navController.navigate(R.id.settingsFragment)
     }
 }

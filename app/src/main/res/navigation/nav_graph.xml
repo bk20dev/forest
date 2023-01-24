@@ -6,6 +6,11 @@
     app:startDestination="@id/progressFragment">
 
     <fragment
+        android:id="@+id/settingsFragment"
+        android:name="pl.bk20.forest.presentation.SettingsFragment"
+        android:label="@string/settings" />
+
+    <fragment
         android:id="@+id/progressFragment"
         android:name="pl.bk20.forest.presentation.ProgressFragment"
         android:label="@string/app_name"
