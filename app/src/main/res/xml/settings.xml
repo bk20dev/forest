@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/goals">
 
         <EditTextPreference
+            app:defaultValue="7500"
             app:key="daily_goal"
             app:title="@string/daily_goal" />
 
@@ -12,18 +14,24 @@
     <PreferenceCategory app:title="@string/advanced">
 
         <EditTextPreference
+            app:defaultValue="67"
             app:key="step_length"
             app:title="@string/step_length" />
 
         <EditTextPreference
+            app:defaultValue="182"
             app:key="height"
             app:title="@string/height" />
 
         <EditTextPreference
+            app:defaultValue="70"
             app:key="weight"
             app:title="@string/weight" />
 
         <ListPreference
+            android:defaultValue="4.8"
+            app:entries="@array/pace_entries"
+            app:entryValues="@array/pace_values"
             app:key="pace"
             app:title="@string/pace" />
 
