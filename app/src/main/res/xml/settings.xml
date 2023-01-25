@@ -37,4 +37,18 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/about">
+
+        <Preference
+            android:summary="@string/github_summary"
+            android:title="@string/github">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/github_repository_url" />
+
+        </Preference>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
