@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openSettings() {
-        navController.navigate(R.id.settingsFragment)
+        val settingsIntent = Intent(this, SettingsActivity::class.java)
+        startActivity(settingsIntent)
     }
 }

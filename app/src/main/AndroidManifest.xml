@@ -43,6 +43,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".presentation.SettingsActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.MainActivity" />
+
     </application>
 
 </manifest>
