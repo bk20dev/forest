@@ -10,6 +10,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import pl.bk20.forest.R
 import pl.bk20.forest.databinding.ActivityMainBinding
 import pl.bk20.forest.service.StepCounterService
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         setupActionBarWithNavController(navController)
+        binding.bottomNavigation.setupWithNavController(navController)
 
         // TODO: Ask for permissions or something
         startStepCounterService()

@@ -13,6 +13,11 @@
     <string name="kilometers_abbr">km</string>
     <string name="calorie_abbr">kcal</string>
 
+    <!-- Navigation -->
+    <string name="forest">Forest</string>
+    <string name="tree">Tree</string>
+    <string name="stats">Stats</string>
+
     <!-- Preferences -->
     <string name="settings">Settings</string>
     <string name="goals">Goals</string>
