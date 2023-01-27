@@ -9,5 +9,14 @@
         android:id="@+id/activityRecognitionPermissionFragment"
         android:name="pl.bk20.forest.presentation.ActivityRecognitionPermissionFragment"
         android:label="fragment_activity_recognition_permission"
-        tools:layout="@layout/fragment_activity_recognition_permission" />
+        tools:layout="@layout/fragment_activity_recognition_permission">
+        <action
+            android:id="@+id/action_activityRecognitionPermissionFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="pl.bk20.forest.presentation.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

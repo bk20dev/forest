@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image_walk" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_permission_rationale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -44,7 +44,7 @@
         android:layout_marginTop="38dp"
         android:importantForAccessibility="no"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/text_permission_rationale"
         app:srcCompat="@drawable/do_not_disturb_on_fill0_wght400_grad0_opsz24" />
 
     <TextView
