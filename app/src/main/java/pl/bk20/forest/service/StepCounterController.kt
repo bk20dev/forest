@@ -2,18 +2,12 @@ package pl.bk20.forest.service
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
 import pl.bk20.forest.domain.usecase.StepsUseCases
 import java.time.LocalDate
 
 class StepCounterController(
-    private val stepsUseCases: StepsUseCases,
-    private val coroutineScope: CoroutineScope
+    private val stepsUseCases: StepsUseCases, private val coroutineScope: CoroutineScope
 ) {
 
     private val _steps = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 10000, 0f, 0))
@@ -42,14 +36,18 @@ class StepCounterController(
         }.launchIn(coroutineScope)
     }
 
+    private val rawStepSensorReadings = MutableStateFlow(StepCounterEvent(0, LocalDate.MIN))
     private var previousStepCount: Int? = null
 
-    fun onStepCountChanged(newStepCount: Int, eventDate: LocalDate) {
-        val stepCountDifference = newStepCount - (previousStepCount ?: newStepCount)
-        previousStepCount = newStepCount
+    init {
+        rawStepSensorReadings.drop(1).onEach {
+            val stepCountDifference = it.stepCount - (previousStepCount ?: it.stepCount)
+            previousStepCount = it.stepCount
+            stepsUseCases.incrementStepCount(it.eventDate, stepCountDifference)
+        }.launchIn(coroutineScope)
+    }
 
-        coroutineScope.launch {
-            stepsUseCases.incrementStepCount(eventDate, stepCountDifference)
-        }
+    fun onStepCountChanged(newStepCount: Int, eventDate: LocalDate) {
+        rawStepSensorReadings.value = StepCounterEvent(newStepCount, eventDate)
     }
 }
