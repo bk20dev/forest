@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun openOnboardingActivity() {
-        val intent = Intent(this, null)
+        val intent = Intent(this, OnboardingActivity::class.java)
         startActivity(intent)
     }
 

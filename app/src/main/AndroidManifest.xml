@@ -43,6 +43,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:launchMode="singleInstance" />
