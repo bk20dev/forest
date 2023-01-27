@@ -13,6 +13,14 @@
     <string name="kilometers_abbr">km</string>
     <string name="calorie_abbr">kcal</string>
 
+    <!-- Onboarding -->
+    <string name="action_continue">Continue</string>
+    <string name="revoke_permission_rationale">You can revoke this permission in system settings, but keep in mind the app will stop working</string>
+    <string name="data_consent">All your data is stored locally on your device and will not be shared with anyone</string>
+
+    <string name="allow_activity_recognition">Allow activity recognition</string>
+    <string name="activity_recognition_rationale">This permission is required to detect and count the steps you take.</string>
+
     <!-- Navigation -->
     <string name="forest">Forest</string>
     <string name="tree">Tree</string>
