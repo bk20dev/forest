@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_nav_graph"
+    app:startDestination="@id/activityRecognitionPermissionFragment">
+
+    <fragment
+        android:id="@+id/activityRecognitionPermissionFragment"
+        android:name="pl.bk20.forest.presentation.ActivityRecognitionPermissionFragment"
+        android:label="fragment_activity_recognition_permission"
+        tools:layout="@layout/fragment_activity_recognition_permission" />
+</navigation>
