@@ -17,6 +17,8 @@ class ForestApplication : Application() {
         super.onCreate()
         DynamicColors.applyToActivitiesIfAvailable(this)
 
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         settingsStore = SettingsStoreImpl(sharedPreferences)
 
