@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.google.android.material.color.DynamicColors
+import pl.bk20.forest.data.source.ForestDatabase
 import pl.bk20.forest.data.source.SettingsStore
 import pl.bk20.forest.data.source.SettingsStoreImpl
 import pl.bk20.forest.data.source.StepsDatabase
@@ -12,6 +13,7 @@ class ForestApplication : Application() {
 
     lateinit var settingsStore: SettingsStore
     lateinit var stepsDatabase: StepsDatabase
+    lateinit var forestDatabase: ForestDatabase
 
     override fun onCreate() {
         super.onCreate()
@@ -26,6 +28,12 @@ class ForestApplication : Application() {
             applicationContext,
             StepsDatabase::class.java,
             StepsDatabase.DATABASE_NAME
+        ).build()
+
+        forestDatabase = Room.databaseBuilder(
+            applicationContext,
+            ForestDatabase::class.java,
+            ForestDatabase.DATABASE_NAME
         ).build()
     }
 }
