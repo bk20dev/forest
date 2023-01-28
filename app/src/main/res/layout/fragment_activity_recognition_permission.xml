@@ -15,7 +15,8 @@
         android:importantForAccessibility="no"
         android:src="@drawable/directions_walk_fill0_wght400_grad0_opsz48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:textColorPrimary" />
 
     <TextView
         android:id="@+id/text_permission_title"
@@ -45,7 +46,8 @@
         android:importantForAccessibility="no"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_permission_rationale"
-        app:srcCompat="@drawable/do_not_disturb_on_fill0_wght400_grad0_opsz24" />
+        app:srcCompat="@drawable/do_not_disturb_on_fill0_wght400_grad0_opsz24"
+        app:tint="?android:textColorPrimary" />
 
     <TextView
         android:layout_width="0dp"

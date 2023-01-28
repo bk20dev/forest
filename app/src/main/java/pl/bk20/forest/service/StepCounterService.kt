@@ -85,7 +85,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
         NotificationCompat.Builder(this@StepCounterService, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(launchApplicationPendingIntent)
-            .setSmallIcon(R.drawable.baseline_directions_walk_24)
+            .setSmallIcon(R.drawable.nature_fill0_wght400_grad0_opsz24)
             .setContentTitle(title)
             .setContentText(content)
             .setOnlyAlertOnce(true)
