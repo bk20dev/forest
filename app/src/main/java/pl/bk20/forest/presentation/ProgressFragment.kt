@@ -16,7 +16,7 @@ import java.text.DecimalFormat
 
 class ProgressFragment : Fragment() {
 
-    private val viewModel: ProgressViewModel by activityViewModels { ProgressViewModel }
+    private val viewModel: ProgressViewModel by activityViewModels { ProgressViewModel.Factory }
 
     private var _binding: FragmentProgressBinding? = null
     private val binding get() = _binding!!
