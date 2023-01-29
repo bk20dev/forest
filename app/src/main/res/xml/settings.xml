@@ -29,7 +29,7 @@
             app:title="@string/weight" />
 
         <ListPreference
-            android:defaultValue="4.8"
+            android:defaultValue="1"
             app:entries="@array/pace_entries"
             app:entryValues="@array/pace_values"
             app:key="pace"

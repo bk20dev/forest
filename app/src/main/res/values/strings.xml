@@ -40,14 +40,14 @@
     <string name="weight">Weight</string>
     <string name="pace">Pace</string>
     <string-array name="pace_entries">
-        <item>Slow (3.2 km/h)</item>
-        <item>Normal (4.8 km/h)</item>
-        <item>Fast (6.4 km/h)</item>
+        <item>Slow</item>
+        <item>Normal</item>
+        <item>Fast</item>
     </string-array>
     <string-array name="pace_values" translatable="false">
-        <item>3.2</item>
-        <item>4.8</item>
-        <item>6.4</item>
+        <item>0.8</item>
+        <item>1</item>
+        <item>1.2</item>
     </string-array>
     <string name="about">About</string>
     <string name="github" translatable="false">GitHub</string>
