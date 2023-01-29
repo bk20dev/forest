@@ -7,16 +7,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
+import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
-import pl.bk20.forest.data.repository.StepsRepositoryImpl
+import pl.bk20.forest.domain.usecase.DayUseCases
 import pl.bk20.forest.domain.usecase.SettingsUseCases
-import pl.bk20.forest.domain.usecase.StepsUseCases
 import java.time.LocalDate
 
 class ProgressViewModel(
-    private val stepsUseCases: StepsUseCases,
+    private val dayUseCases: DayUseCases,
     private val settingsUseCases: SettingsUseCases,
     initialDate: LocalDate = LocalDate.now()
 ) : ViewModel() {
@@ -27,25 +26,29 @@ class ProgressViewModel(
     private var getProgressJob: Job? = null
 
     init {
-        viewModelScope.launch {
-            settingsUseCases.getSettings().collect {
-                _progress.value = progress.value.copy(
-                    goal = it.dailyGoal
-                )
-            }
-        }
-    }
-
-    init {
         getProgress(initialDate)
     }
 
     private fun getProgress(date: LocalDate) {
         getProgressJob?.cancel()
-        getProgressJob = stepsUseCases.getSteps(date).onEach {
-            _progress.value = progress.value.copy(
-                steps = it?.count ?: 0
+
+        val settingsFlow = settingsUseCases.getSettings()
+        val dayFlow = dayUseCases.getDay(date)
+
+        getProgressJob = settingsFlow.combine(dayFlow) { settings, day ->
+            day?.run {
+                progress.value.copy(
+                    date = date,
+                    steps = steps,
+                    goal = goal
+                )
+            } ?: ProgressState(
+                date = date,
+                steps = 0,
+                goal = settings.dailyGoal
             )
+        }.onEach {
+            _progress.value = it
         }.launchIn(viewModelScope)
     }
 
@@ -55,15 +58,15 @@ class ProgressViewModel(
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
             val application = checkNotNull(extras[APPLICATION_KEY]) as ForestApplication
 
-            val stepsDao = application.stepsDatabase.stepsDao
-            val stepsRepository = StepsRepositoryImpl(stepsDao)
-            val stepsUseCases = StepsUseCases(stepsRepository)
+            val dayDatabase = application.forestDatabase
+            val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
+            val dayUseCases = DayUseCases(dayRepository)
 
             val settingsStore = application.settingsStore
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val settingsUseCases = SettingsUseCases(settingsRepository)
 
-            return ProgressViewModel(stepsUseCases, settingsUseCases) as T
+            return ProgressViewModel(dayUseCases, settingsUseCases) as T
         }
     }
 }
