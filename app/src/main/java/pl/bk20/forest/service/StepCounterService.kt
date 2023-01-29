@@ -23,9 +23,7 @@ import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.R
 import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
-import pl.bk20.forest.data.repository.StepsRepositoryImpl
 import pl.bk20.forest.domain.usecase.DayUseCases
-import pl.bk20.forest.domain.usecase.StepsUseCases
 import pl.bk20.forest.presentation.MainActivity
 import java.time.LocalDate
 
@@ -57,17 +55,13 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         // Initialise controller
         val forestApplication = application as ForestApplication
 
-        val stepsDatabase = forestApplication.stepsDatabase
-        val stepsRepository = StepsRepositoryImpl(stepsDatabase.stepsDao)
-        val stepsUseCases = StepsUseCases(stepsRepository)
-
         val settingsStore = forestApplication.settingsStore
         val settingsRepository = SettingsRepositoryImpl(settingsStore)
         val dayDatabase = forestApplication.forestDatabase
         val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
         val dayUseCases = DayUseCases(dayRepository, settingsRepository)
 
-        controller = StepCounterController(stepsUseCases, dayUseCases, lifecycleScope)
+        controller = StepCounterController(dayUseCases, lifecycleScope)
 
         // Create notification
         val notification = createNotification(controller.stats.value)

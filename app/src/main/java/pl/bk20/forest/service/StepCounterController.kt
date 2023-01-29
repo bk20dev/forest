@@ -4,12 +4,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import pl.bk20.forest.domain.usecase.DayUseCases
-import pl.bk20.forest.domain.usecase.StepsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class StepCounterController(
-    private val stepsUseCases: StepsUseCases,
     private val dayUseCases: DayUseCases,
     private val coroutineScope: CoroutineScope,
     initialDate: LocalDate = LocalDate.now()
@@ -44,10 +42,10 @@ class StepCounterController(
     private var previousStepCount: Int? = null
 
     init {
-        rawStepSensorReadings.drop(1).onEach {
-            val stepCountDifference = it.stepCount - (previousStepCount ?: it.stepCount)
-            previousStepCount = it.stepCount
-            stepsUseCases.incrementStepCount(it.eventDate, stepCountDifference)
+        rawStepSensorReadings.drop(1).onEach { event ->
+            val stepCountDifference = event.stepCount - (previousStepCount ?: event.stepCount)
+            previousStepCount = event.stepCount
+            dayUseCases.incrementStepCount(event.eventDate, stepCountDifference)
         }.launchIn(coroutineScope)
     }
 
