@@ -10,4 +10,5 @@ class DayUseCases(
 
     val getDay: GetDay = GetDayImpl(dayRepository, settingsRepository)
     val incrementStepCount: IncrementStepCount = IncrementStepCountImpl(dayRepository, getDay)
+    val updateDayParameters: UpdateDayParameters = UpdateDayParametersImpl(dayRepository)
 }
