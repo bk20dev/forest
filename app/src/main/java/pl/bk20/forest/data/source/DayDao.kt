@@ -1,11 +1,9 @@
 package pl.bk20.forest.data.source
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.domain.model.Day
+import pl.bk20.forest.domain.model.DayParameters
 import java.time.LocalDate
 
 @Dao
@@ -16,4 +14,7 @@ interface DayDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDay(day: Day)
+
+    @Update(entity = Day::class)
+    suspend fun updateParameters(day: DayParameters)
 }
