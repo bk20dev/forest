@@ -3,36 +3,53 @@ package pl.bk20.forest.service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import pl.bk20.forest.domain.usecase.DayUseCases
+import pl.bk20.forest.domain.usecase.SettingsUseCases
 import pl.bk20.forest.domain.usecase.StepsUseCases
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 class StepCounterController(
-    private val stepsUseCases: StepsUseCases, private val coroutineScope: CoroutineScope
+    private val stepsUseCases: StepsUseCases,
+    private val dayUseCases: DayUseCases,
+    private val settingsUseCases: SettingsUseCases,
+    private val coroutineScope: CoroutineScope,
+    initialDate: LocalDate = LocalDate.now()
 ) {
 
-    private val _steps = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 10000, 0f, 0))
-    val steps: StateFlow<StepCounterState> = _steps.asStateFlow()
+    private val _stats = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 10000, 0f, 0))
+    val stats: StateFlow<StepCounterState> = _stats.asStateFlow()
 
-    private var getStepsJob: Job? = null
+    private var getStatsJob: Job? = null
 
     init {
-        updateActiveDate(steps.value.date)
+        getStats(initialDate)
     }
 
-    fun updateActiveDate(date: LocalDate) {
-        getSteps(date)
-    }
+    private fun getStats(date: LocalDate) {
+        getStatsJob?.cancel()
 
-    private fun getSteps(date: LocalDate) {
-        getStepsJob?.cancel()
-        getStepsJob = stepsUseCases.getSteps(date).onEach {
-            val newStepCount = it?.count ?: 0
-            _steps.value = steps.value.copy(
+        val settingsFlow = settingsUseCases.getSettings()
+        val dayFlow = dayUseCases.getDay(date)
+
+        getStatsJob = settingsFlow.combine(dayFlow) { settings, day ->
+            day?.run {
+                stats.value.copy(
+                    date = date,
+                    steps = steps,
+                    goal = goal,
+                    distanceTravelled = (settings.stepLength * steps) / 100_000f,
+                    calorieBurned = (0.04 * steps * (settings.height / 182.0 + settings.weight / 70.0 - 1) * settings.pace).roundToInt()
+                )
+            } ?: StepCounterState(
                 date = date,
-                takenSteps = newStepCount,
-                distanceTravelledInKm = newStepCount * 7f / 10000, // 7 dm per step
-                calorieBurned = newStepCount / 25 // 0.04 (1/25) kcal per step
+                steps = 0,
+                goal = settings.dailyGoal,
+                distanceTravelled = 0f,
+                calorieBurned = 0
             )
+        }.onEach {
+            _stats.value = it
         }.launchIn(coroutineScope)
     }
 

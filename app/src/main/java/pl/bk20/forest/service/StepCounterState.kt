@@ -4,8 +4,8 @@ import java.time.LocalDate
 
 data class StepCounterState(
     val date: LocalDate,
-    val takenSteps: Int,
-    val dailyGoal: Int,
-    val distanceTravelledInKm: Float,
+    val steps: Int,
+    val goal: Int,
+    val distanceTravelled: Float,
     val calorieBurned: Int
 )

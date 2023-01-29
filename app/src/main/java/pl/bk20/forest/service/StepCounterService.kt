@@ -21,10 +21,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.R
+import pl.bk20.forest.data.repository.DayRepositoryImpl
+import pl.bk20.forest.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.data.repository.StepsRepositoryImpl
+import pl.bk20.forest.domain.usecase.DayUseCases
+import pl.bk20.forest.domain.usecase.SettingsUseCases
 import pl.bk20.forest.domain.usecase.StepsUseCases
-import pl.bk20.forest.domain.util.MidnightTimer
-import pl.bk20.forest.domain.util.TimerImpl
 import pl.bk20.forest.presentation.MainActivity
 import java.time.LocalDate
 
@@ -39,10 +41,10 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         private const val PENDING_INTENT_ID = 0x1
     }
 
-    private val midnightTimer = MidnightTimer(TimerImpl()) {
-        val today = LocalDate.now()
-        controller.updateActiveDate(today)
-    }
+//    private val midnightTimer = MidnightTimer(TimerImpl()) {
+//        val today = LocalDate.now()
+//        controller.updateActiveDate(today)
+//    }
 
     override fun onCreate() {
         super.onCreate()
@@ -54,21 +56,33 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         registerStepCounter(sensorManager)
 
         // Initialise controller
-        val stepsDatabase = (application as ForestApplication).stepsDatabase
+        val forestApplication = application as ForestApplication
+
+        val stepsDatabase = forestApplication.stepsDatabase
         val stepsRepository = StepsRepositoryImpl(stepsDatabase.stepsDao)
-        val useCases = StepsUseCases(stepsRepository)
-        controller = StepCounterController(useCases, lifecycleScope)
+        val stepsUseCases = StepsUseCases(stepsRepository)
+
+        val dayDatabase = forestApplication.forestDatabase
+        val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
+        val dayUseCases = DayUseCases(dayRepository)
+
+        val settingsStore = forestApplication.settingsStore
+        val settingsRepository = SettingsRepositoryImpl(settingsStore)
+        val settingsUseCases = SettingsUseCases(settingsRepository)
+
+        controller =
+            StepCounterController(stepsUseCases, dayUseCases, settingsUseCases, lifecycleScope)
 
         // Create notification
-        val notification = createNotification(controller.steps.value)
+        val notification = createNotification(controller.stats.value)
         startForeground(NOTIFICATION_ID, notification)
 
-        midnightTimer.start()
+//        midnightTimer.start()
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                controller.steps.collect {
+                controller.stats.collect {
                     val updatedNotification = createNotification(it)
                     notificationManager.notify(NOTIFICATION_ID, updatedNotification)
                 }
@@ -77,10 +91,10 @@ class StepCounterService : LifecycleService(), SensorEventListener {
     }
 
     private fun createNotification(state: StepCounterState): Notification = state.run {
-        val title = resources.getQuantityString(R.plurals.step_count, takenSteps, takenSteps)
-        val progress = takenSteps * 100 / dailyGoal
+        val title = resources.getQuantityString(R.plurals.step_count, steps, steps)
+        val progress = steps * 100 / goal
         val content = getString(
-            R.string.step_counter_stats, calorieBurned, distanceTravelledInKm, progress
+            R.string.step_counter_stats, calorieBurned, distanceTravelled, progress
         )
 
         NotificationCompat.Builder(this@StepCounterService, NOTIFICATION_CHANNEL_ID)
@@ -118,7 +132,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        midnightTimer.stop()
+//        midnightTimer.stop()
         sensorManager.unregisterListener(this)
     }
 
