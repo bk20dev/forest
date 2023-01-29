@@ -25,7 +25,6 @@ import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.data.repository.StepsRepositoryImpl
 import pl.bk20.forest.domain.usecase.DayUseCases
-import pl.bk20.forest.domain.usecase.SettingsUseCases
 import pl.bk20.forest.domain.usecase.StepsUseCases
 import pl.bk20.forest.presentation.MainActivity
 import java.time.LocalDate
@@ -62,16 +61,13 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         val stepsRepository = StepsRepositoryImpl(stepsDatabase.stepsDao)
         val stepsUseCases = StepsUseCases(stepsRepository)
 
-        val dayDatabase = forestApplication.forestDatabase
-        val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
-        val dayUseCases = DayUseCases(dayRepository)
-
         val settingsStore = forestApplication.settingsStore
         val settingsRepository = SettingsRepositoryImpl(settingsStore)
-        val settingsUseCases = SettingsUseCases(settingsRepository)
+        val dayDatabase = forestApplication.forestDatabase
+        val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
+        val dayUseCases = DayUseCases(dayRepository, settingsRepository)
 
-        controller =
-            StepCounterController(stepsUseCases, dayUseCases, settingsUseCases, lifecycleScope)
+        controller = StepCounterController(stepsUseCases, dayUseCases, lifecycleScope)
 
         // Create notification
         val notification = createNotification(controller.stats.value)
@@ -92,7 +88,7 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
     private fun createNotification(state: StepCounterState): Notification = state.run {
         val title = resources.getQuantityString(R.plurals.step_count, steps, steps)
-        val progress = steps * 100 / goal
+        val progress = if (goal == 0) 0 else steps * 100 / goal
         val content = getString(
             R.string.step_counter_stats, calorieBurned, distanceTravelled, progress
         )

@@ -1,10 +1,12 @@
 package pl.bk20.forest.domain.usecase
 
 import pl.bk20.forest.domain.repository.DayRepository
+import pl.bk20.forest.domain.repository.SettingsRepository
 
 class DayUseCases(
-    repository: DayRepository
+    dayRepository: DayRepository,
+    settingsRepository: SettingsRepository
 ) {
 
-    val getDay: GetDay = GetDayImpl(repository)
+    val getDay: GetDay = GetDayImpl(dayRepository, settingsRepository)
 }

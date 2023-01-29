@@ -6,5 +6,5 @@ import java.time.LocalDate
 
 interface GetDay {
 
-    operator fun invoke(date: LocalDate): Flow<Day?>
+    operator fun invoke(date: LocalDate): Flow<Day>
 }

@@ -13,4 +13,25 @@ data class Day(
     val steps: Int,
 
     val goal: Int,
-)
+
+    val height: Int,
+
+    val weight: Int,
+
+    val stepLength: Int,
+
+    val pace: Float
+) {
+
+    val distanceTravelled
+        get() = run {
+            val distanceCentimeters = steps * stepLength
+            distanceCentimeters / 100_000f
+        }
+
+    val calorieBurned
+        get() = run {
+            val modifier = height / 182f + weight / 70f - 1
+            0.04f * steps * pace * modifier
+        }
+}
