@@ -2,12 +2,20 @@ package pl.bk20.forest.presentation
 
 import android.os.Bundle
 import android.text.InputType
+import androidx.fragment.app.activityViewModels
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import pl.bk20.forest.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    private val viewModel: SettingsViewModel by activityViewModels { SettingsViewModel.Factory }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.observeSettingsChanges()
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
