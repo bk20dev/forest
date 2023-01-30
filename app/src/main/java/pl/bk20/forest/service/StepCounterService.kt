@@ -94,6 +94,8 @@ class StepCounterService : LifecycleService(), SensorEventListener {
             .setContentText(content)
             .setOnlyAlertOnce(true)
             .setOngoing(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSilent(true)
             .build()
     }
 
@@ -130,7 +132,10 @@ class StepCounterService : LifecycleService(), SensorEventListener {
     private fun createNotificationChannel(): NotificationChannel {
         val name = getString(R.string.step_counter_channel)
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        return NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
+
+        return NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance).apply {
+            setShowBadge(false)
+        }
     }
 
     @RequiresApi(VERSION_CODES.O)
