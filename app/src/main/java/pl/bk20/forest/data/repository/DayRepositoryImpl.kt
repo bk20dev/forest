@@ -15,8 +15,8 @@ class DayRepositoryImpl(
         return dao.getDay(date)
     }
 
-    override suspend fun insertDay(day: Day) {
-        dao.insertDay(day)
+    override suspend fun upsertDay(day: Day) {
+        dao.upsertDay(day)
     }
 
     override suspend fun updateParameters(dayParameters: DayParameters) {

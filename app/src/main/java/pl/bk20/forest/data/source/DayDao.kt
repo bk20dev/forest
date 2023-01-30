@@ -12,8 +12,8 @@ interface DayDao {
     @Query("SELECT * FROM day WHERE date = :date")
     fun getDay(date: LocalDate): Flow<Day?>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDay(day: Day)
+    @Upsert
+    suspend fun upsertDay(day: Day)
 
     @Update(entity = Day::class)
     suspend fun updateParameters(day: DayParameters)

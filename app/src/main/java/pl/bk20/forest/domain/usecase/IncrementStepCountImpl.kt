@@ -12,6 +12,6 @@ class IncrementStepCountImpl(
     override suspend fun invoke(date: LocalDate, by: Int) {
         val day = getDayUseCase(date).first()
         val updatedDay = day.copy(steps = day.steps + by)
-        repository.insertDay(updatedDay)
+        repository.upsertDay(updatedDay)
     }
 }
