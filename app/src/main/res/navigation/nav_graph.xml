@@ -13,7 +13,13 @@
     <fragment
         android:id="@+id/progressFragment"
         android:name="pl.bk20.forest.presentation.ProgressFragment"
-        android:label="@string/app_name"
+        android:label="@string/tree"
         tools:layout="@layout/fragment_progress" />
+
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="pl.bk20.forest.presentation.StatsFragment"
+        android:label="@string/stats"
+        tools:layout="@layout/fragment_stats" />
 
 </navigation>
