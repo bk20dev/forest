@@ -9,6 +9,8 @@ interface DayRepository {
 
     fun getDay(date: LocalDate): Flow<Day?>
 
+    fun getDays(range: ClosedRange<LocalDate>): Flow<List<Day>>
+
     suspend fun upsertDay(day: Day)
 
     suspend fun updateParameters(dayParameters: DayParameters)

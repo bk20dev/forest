@@ -12,6 +12,9 @@ interface DayDao {
     @Query("SELECT * FROM day WHERE date = :date")
     fun getDay(date: LocalDate): Flow<Day?>
 
+    @Query("SELECT * FROM day WHERE date BETWEEN :start AND :endInclusive")
+    fun getDays(start: LocalDate, endInclusive: LocalDate): Flow<List<Day>>
+
     @Upsert
     suspend fun upsertDay(day: Day)
 

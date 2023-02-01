@@ -15,6 +15,10 @@ class DayRepositoryImpl(
         return dao.getDay(date)
     }
 
+    override fun getDays(range: ClosedRange<LocalDate>): Flow<List<Day>> {
+        return dao.getDays(range.start, range.endInclusive)
+    }
+
     override suspend fun upsertDay(day: Day) {
         dao.upsertDay(day)
     }
