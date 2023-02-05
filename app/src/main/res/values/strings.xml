@@ -26,6 +26,17 @@
     <string name="tree">Tree</string>
     <string name="stats">Stats</string>
 
+    <!-- Stats -->
+    <string name="step_count">Step count</string>
+    <plurals name="step_count_format">
+        <item quantity="one">%d step</item>
+        <item quantity="other">%d steps</item>
+    </plurals>
+    <string name="calorie_burned">Calorie burned</string>
+    <string name="calorie_burned_format">%d kcal</string>
+    <string name="distance_travelled">Distance travelled</string>
+    <string name="distance_travelled_format">%.2f km</string>
+
     <!-- Preferences -->
     <string name="settings">Settings</string>
     <string name="goals">Goals</string>
