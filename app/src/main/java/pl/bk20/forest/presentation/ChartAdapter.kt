@@ -32,15 +32,13 @@ class ChartAdapter<T>(
     ) : ViewHolder(binding.root) {
 
         fun bind(chartValue: ChartValue<T>, listener: OnValueSelected<T>) {
+            binding.root.setOnClickListener { listener.onSelect(chartValue) }
             binding.textSupporting.text = chartValue.label
             binding.barFilled.apply {
                 val color = context.getThemeColor(chartValue.color)
                 backgroundTintList = ColorStateList.valueOf(color)
-
                 val params = layoutParams as ConstraintLayout.LayoutParams
                 params.matchConstraintPercentHeight = chartValue.value
-
-                setOnClickListener { listener.onSelect(chartValue) }
                 requestLayout()
             }
         }

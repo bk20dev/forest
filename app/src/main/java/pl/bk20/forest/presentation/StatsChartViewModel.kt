@@ -11,6 +11,7 @@ import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.domain.model.Day
 import pl.bk20.forest.domain.usecase.StatsUseCases
+import pl.bk20.forest.util.iterator
 import java.time.LocalDate
 
 class StatsChartViewModel(
@@ -25,8 +26,23 @@ class StatsChartViewModel(
     fun selectWeek(firstDay: LocalDate) {
         getWeekJob?.cancel()
         getWeekJob = statsUseCases.getWeek(firstDay).onEach {
-            _week.value = it
+            _week.value = alignWeek(it, firstDay)
         }.launchIn(viewModelScope)
+    }
+
+    private fun alignWeek(
+        week: List<Day>,
+        firstDay: LocalDate,
+        lastDay: LocalDate = firstDay.plusDays(6)
+    ): List<Day> {
+        val result = week.toMutableList()
+        for (date in firstDay..lastDay) {
+            val shouldAddDay = result.none { it.date == date }
+            if (shouldAddDay) {
+                result.add(Day(date, goal = 0))
+            }
+        }
+        return result.sortedBy { it.date }
     }
 
     companion object Factory : ViewModelProvider.Factory {

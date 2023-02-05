@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,12 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import pl.bk20.forest.databinding.FragmentStatsChartBinding
+import pl.bk20.forest.domain.model.Day
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
-import com.google.android.material.R as MaterialR
+import com.google.android.material.R as RMaterial
 
-class StatsChartFragment : Fragment() {
+class StatsChartFragment(
+    private val listener: OnDateSelectedListener
+) : Fragment() {
 
     companion object {
         const val ARG_FIRST_DAY = "__first_day"
@@ -26,8 +28,8 @@ class StatsChartFragment : Fragment() {
     private lateinit var binding: FragmentStatsChartBinding
     private val viewModel: StatsChartViewModel by viewModels { StatsChartViewModel.Factory }
 
-    private val chartAdapter = ChartAdapter<LocalDate> {
-        Toast.makeText(context, "${it.id} selected", Toast.LENGTH_SHORT).show()
+    private val chartAdapter = ChartAdapter {
+        listener.onDateSelected(it.id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,22 +44,25 @@ class StatsChartFragment : Fragment() {
                 viewModel.week.collect { week ->
                     val highestStepsValue = week.maxOfOrNull { it.steps } ?: 1
                     val locale = resources.configuration.locales[0]
-                    val chartValues = week.map { day ->
-                        val value = day.steps.toFloat() / highestStepsValue
-                        val weekdayName = day.date.dayOfWeek
-                            .getDisplayName(TextStyle.SHORT, locale)
-                        val dailyGoalReached = day.steps >= day.goal
-                        val color = if (dailyGoalReached) {
-                            MaterialR.attr.colorPrimary
-                        } else {
-                            MaterialR.attr.colorPrimaryContainer
-                        }
-                        ChartAdapter.ChartValue(day.date, value, weekdayName, color)
-                    }
+                    val chartValues = week.toChartValues(highestStepsValue, locale)
                     chartAdapter.submitList(chartValues)
                 }
             }
         }
+    }
+
+    private fun List<Day>.toChartValues(
+        max: Int,
+        locale: Locale
+    ): List<ChartAdapter.ChartValue<LocalDate>> = map {
+        val value = it.steps / max.toFloat()
+        val weekdayName = it.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale)
+        val color = if (it.steps >= it.goal) {
+            RMaterial.attr.colorPrimary
+        } else {
+            RMaterial.attr.colorPrimaryContainer
+        }
+        ChartAdapter.ChartValue(it.date, value, weekdayName, color)
     }
 
     override fun onCreateView(
@@ -73,5 +78,10 @@ class StatsChartFragment : Fragment() {
         binding.recyclerViewChart.apply {
             adapter = chartAdapter
         }
+    }
+
+    fun interface OnDateSelectedListener {
+
+        fun onDateSelected(date: LocalDate)
     }
 }
