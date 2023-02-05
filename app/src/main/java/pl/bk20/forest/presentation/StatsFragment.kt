@@ -35,7 +35,8 @@ class StatsChartFragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragm
     override fun createFragment(position: Int): Fragment {
         val fragment = StatsChartFragment()
         fragment.arguments = Bundle().apply {
-            val firstDay = LocalDate.now().minusDays(6)
+            val daysToSubtract = 6 + position * 7
+            val firstDay = LocalDate.now().minusDays(daysToSubtract.toLong())
             putSerializable(StatsChartFragment.ARG_FIRST_DAY, firstDay)
         }
         return fragment
