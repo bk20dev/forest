@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,19 +18,19 @@ import java.time.format.TextStyle
 import java.util.*
 import com.google.android.material.R as RMaterial
 
-class StatsChartFragment(
-    private val listener: OnDateSelectedListener
-) : Fragment() {
+class StatsChartFragment : Fragment() {
 
     companion object {
         const val ARG_FIRST_DAY = "__first_day"
     }
 
     private lateinit var binding: FragmentStatsChartBinding
+
     private val viewModel: StatsChartViewModel by viewModels { StatsChartViewModel.Factory }
+    private val statsViewModel: StatsViewModel by activityViewModels { StatsViewModel }
 
     private val chartAdapter = ChartAdapter {
-        listener.onDateSelected(it.id)
+        statsViewModel.selectDay(it.id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,10 +79,5 @@ class StatsChartFragment(
         binding.recyclerViewChart.apply {
             adapter = chartAdapter
         }
-    }
-
-    fun interface OnDateSelectedListener {
-
-        fun onDateSelected(date: LocalDate)
     }
 }

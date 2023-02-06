@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,7 +19,7 @@ class StatsFragment : Fragment() {
 
     private lateinit var binding: FragmentStatsBinding
 
-    private val viewModel: StatsViewModel by viewModels { StatsViewModel }
+    private val viewModel: StatsViewModel by activityViewModels { StatsViewModel }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +31,7 @@ class StatsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = StatsChartFragmentAdapter(this) { date ->
-            viewModel.selectDay(date)
-        }
+        val adapter = StatsChartFragmentAdapter(this)
         binding.viewPagerChart.adapter = adapter
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -56,15 +54,12 @@ class StatsFragment : Fragment() {
     }
 }
 
-class StatsChartFragmentAdapter(
-    fragment: Fragment,
-    private val listener: StatsChartFragment.OnDateSelectedListener
-) : FragmentStateAdapter(fragment) {
+class StatsChartFragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = StatsChartFragment(listener)
+        val fragment = StatsChartFragment()
         fragment.arguments = Bundle().apply {
             val daysToSubtract = 6 + position * 7
             val firstDay = LocalDate.now().minusDays(daysToSubtract.toLong())
