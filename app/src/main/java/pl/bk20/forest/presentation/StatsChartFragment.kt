@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import pl.bk20.forest.databinding.FragmentStatsChartBinding
 import pl.bk20.forest.domain.model.Day
@@ -42,11 +43,15 @@ class StatsChartFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.week.collect { week ->
+                val weekFlow = viewModel.week
+                val dayFlow = statsViewModel.day
+
+                weekFlow.combine(dayFlow) { week, day ->
                     val highestStepsValue = week.maxOfOrNull { it.steps } ?: 1
                     val locale = resources.configuration.locales[0]
-                    val chartValues = week.toChartValues(highestStepsValue, locale)
-                    chartAdapter.submitList(chartValues)
+                    week.toChartValues(highestStepsValue, locale, day.date)
+                }.collect {
+                    chartAdapter.submitList(it)
                 }
             }
         }
@@ -54,15 +59,15 @@ class StatsChartFragment : Fragment() {
 
     private fun List<Day>.toChartValues(
         max: Int,
-        locale: Locale
+        locale: Locale,
+        activeDay: LocalDate
     ): List<ChartAdapter.ChartValue<LocalDate>> = map {
         val value = it.steps / max.toFloat()
         val weekdayName = it.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale)
-        val color = if (it.steps >= it.goal) {
-            RMaterial.attr.colorPrimary
-        } else {
-            RMaterial.attr.colorPrimaryContainer
-        }
+        val isSelected = it.date.isEqual(activeDay)
+        val color =
+            if (isSelected) RMaterial.attr.colorPrimary
+            else RMaterial.attr.colorPrimaryContainer
         ChartAdapter.ChartValue(it.date, value, weekdayName, color)
     }
 

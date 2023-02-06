@@ -23,6 +23,11 @@ class StatsViewModel(
 
     private var selectDateJob: Job? = null
 
+    init {
+        val today = LocalDate.now()
+        selectDay(today)
+    }
+
     fun selectDay(date: LocalDate) {
         selectDateJob?.cancel()
         selectDateJob = dayUseCases.getDay(date).onEach {
