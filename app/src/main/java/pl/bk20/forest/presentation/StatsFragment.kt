@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -46,6 +47,7 @@ class StatsFragment : Fragment() {
                         R.string.distance_travelled_format, it.distanceTravelled
                     )
                     binding.textStepCount.text = stepsText
+                    binding.viewGroupTree.isVisible = it.treeCollected
                     binding.textCalorieBurned.text = calorieText
                     binding.textDistanceTravelled.text = distanceText
                 }

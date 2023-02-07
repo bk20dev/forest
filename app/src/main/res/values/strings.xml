@@ -32,6 +32,8 @@
         <item quantity="one">%d step</item>
         <item quantity="other">%d steps</item>
     </plurals>
+    <string name="tree_collected">Tree collected</string>
+    <string name="daily_goal_reached">Daily goal reached</string>
     <string name="calorie_burned">Calorie burned</string>
     <string name="calorie_burned_format">%d kcal</string>
     <string name="distance_travelled">Distance travelled</string>

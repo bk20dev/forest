@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:padding="24dp"
     tools:context=".presentation.StatsFragment">
 
@@ -27,59 +28,123 @@
             app:cardBackgroundColor="?attr/colorSecondaryContainer"
             app:cardCornerRadius="24dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="@drawable/shape_divider"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="18dp">
+                android:showDividers="middle">
 
-                <View
-                    android:id="@+id/view_step_background"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/shape_circle"
-                    android:backgroundTint="?attr/colorSecondary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_step_background"
-                    app:layout_constraintEnd_toEndOf="@+id/view_step_background"
-                    app:layout_constraintStart_toStartOf="@+id/view_step_background"
-                    app:layout_constraintTop_toTopOf="@+id/view_step_background"
-                    app:srcCompat="@drawable/steps_fill0_wght400_grad0_opsz24"
-                    app:tint="?attr/colorOnSecondary" />
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
 
-                <TextView
-                    android:id="@+id/text_step_count"
-                    android:layout_width="wrap_content"
+                    <View
+                        android:id="@+id/view_step_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_step_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_step_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_step_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_step_background"
+                        app:srcCompat="@drawable/steps_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnSecondary" />
+
+                    <TextView
+                        android:id="@+id/text_step_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_step_count_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_step_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_step_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="6500 steps" />
+
+                    <TextView
+                        android:id="@+id/text_step_count_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_count"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_step_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_step_count"
+                        app:layout_constraintTop_toBottomOf="@+id/text_step_count"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/view_group_tree"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="2dp"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    app:layout_constraintBottom_toTopOf="@+id/text_step_count_label"
-                    app:layout_constraintStart_toEndOf="@+id/view_step_background"
-                    app:layout_constraintTop_toTopOf="@+id/view_step_background"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="6500 steps" />
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
 
-                <TextView
-                    android:id="@+id/text_step_count_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/step_count"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_step_background"
-                    app:layout_constraintStart_toStartOf="@+id/text_step_count"
-                    app:layout_constraintTop_toBottomOf="@+id/text_step_count"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    <View
+                        android:id="@+id/view_tree_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_tree_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_tree_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_tree_background"
+                        app:srcCompat="@drawable/nature_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnSecondary" />
+
+                    <TextView
+                        android:id="@+id/text_tree_collected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/tree_collected"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_tree_collected_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_tree_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_tree_background"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/text_tree_collected_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/daily_goal_reached"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_tree_collected"
+                        app:layout_constraintTop_toBottomOf="@+id/text_tree_collected"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
