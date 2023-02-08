@@ -27,6 +27,8 @@
     <string name="stats">Stats</string>
 
     <!-- Stats -->
+    <string name="previous_day">Previous day</string>
+    <string name="next_day">Next day</string>
     <string name="step_count">Step count</string>
     <plurals name="step_count_format">
         <item quantity="one">%d step</item>

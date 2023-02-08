@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 import pl.bk20.forest.R
 import pl.bk20.forest.databinding.FragmentStatsBinding
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class StatsFragment : Fragment() {
 
@@ -32,11 +34,24 @@ class StatsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.buttonPreviousDay.setOnClickListener {
+            val selectedDay = viewModel.day.value.date
+            viewModel.selectDay(selectedDay.minusDays(1))
+        }
+        binding.buttonNextDay.setOnClickListener {
+            val selectedDay = viewModel.day.value.date
+            viewModel.selectDay(selectedDay.plusDays(1))
+        }
         val adapter = StatsChartFragmentAdapter(this)
         binding.viewPagerChart.adapter = adapter
+        val locale = resources.configuration.locales[0]
+        val dateFormatter = DateTimeFormatter
+            .ofLocalizedDate(FormatStyle.MEDIUM)
+            .withLocale(locale)
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.day.collect {
+                    binding.textSelectedDate.text = it.date.format(dateFormatter)
                     val stepsText = resources.getQuantityString(
                         R.plurals.step_count_format, it.stepsTaken, it.stepsTaken
                     )
