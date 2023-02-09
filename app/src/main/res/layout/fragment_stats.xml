@@ -37,7 +37,8 @@
                 android:src="@drawable/chevron_left_fill0_wght400_grad0_opsz24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/colorOnBackground" />
 
             <TextView
                 android:id="@+id/text_selected_date"
@@ -63,7 +64,8 @@
                 android:src="@drawable/chevron_right_fill0_wght400_grad0_opsz24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/colorOnBackground" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
