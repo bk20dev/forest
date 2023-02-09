@@ -24,8 +24,8 @@ class StatsViewModel(
     private val _day = MutableStateFlow(StatsState(LocalDate.MIN, 0, false, 0, 0f))
     val day: StateFlow<StatsState> = _day.asStateFlow()
 
-    private val _firstDate = MutableStateFlow(LocalDate.now())
-    val firstDate: StateFlow<LocalDate> = _firstDate.asStateFlow()
+    private val _dateRange = MutableStateFlow(LocalDate.now()..LocalDate.now())
+    val dateRange: StateFlow<ClosedRange<LocalDate>> = _dateRange.asStateFlow()
 
     private var selectDateJob: Job? = null
 
@@ -34,7 +34,8 @@ class StatsViewModel(
         selectDay(today)
         viewModelScope.launch {
             statsUseCases.getFirstDayDate().collect {
-                _firstDate.value = it ?: LocalDate.now()
+                val firstDate = it ?: LocalDate.now()
+                _dateRange.value = firstDate..LocalDate.now()
             }
         }
     }

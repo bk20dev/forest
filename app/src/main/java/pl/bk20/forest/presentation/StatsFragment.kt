@@ -23,7 +23,7 @@ import kotlin.math.absoluteValue
 
 class StatsFragment : Fragment() {
 
-    private val viewModel: StatsViewModel by activityViewModels { StatsViewModel }
+    private val viewModel: StatsViewModel by activityViewModels { StatsViewModel.Factory }
 
     private lateinit var binding: FragmentStatsBinding
 
@@ -57,6 +57,8 @@ class StatsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     viewModel.day.collect {
+                        updateDaySwitchButtonsVisibility(it.date, viewModel.dateRange.value)
+                        scrollChartTo(it.date, viewModel.dateRange.value)
                         binding.textSelectedDate.text = it.date.format(dateFormatter)
                         val stepsText = resources.getQuantityString(
                             R.plurals.step_count_format, it.stepsTaken, it.stepsTaken
@@ -74,13 +76,33 @@ class StatsFragment : Fragment() {
                     }
                 }
                 launch {
-                    viewModel.firstDate.collect { firstDate ->
-                        val period = Period.between(firstDate, LocalDate.now())
+                    viewModel.dateRange.collect {
+                        updateDaySwitchButtonsVisibility(viewModel.day.value.date, it)
+                        val period = Period.between(it.start, it.endInclusive)
                         val weekCount = period.days.absoluteValue / 7 + 1
                         statsChartAdapter.weekCount = weekCount
                     }
                 }
             }
+        }
+    }
+
+    private fun scrollChartTo(
+        selectedDate: LocalDate,
+        historyRange: ClosedRange<LocalDate>
+    ) {
+        val period = Period.between(selectedDate, historyRange.endInclusive)
+        val chartPage = period.days.absoluteValue / 7
+        binding.viewPagerChart.currentItem = chartPage
+    }
+
+    private fun updateDaySwitchButtonsVisibility(
+        selectedDate: LocalDate,
+        historyRange: ClosedRange<LocalDate>
+    ) {
+        binding.apply {
+            buttonPreviousDay.isVisible = selectedDate > historyRange.start
+            buttonNextDay.isVisible = selectedDate < historyRange.endInclusive
         }
     }
 }
