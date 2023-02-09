@@ -7,25 +7,36 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.domain.usecase.DayUseCases
+import pl.bk20.forest.domain.usecase.StatsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class StatsViewModel(
-    private val dayUseCases: DayUseCases
+    private val dayUseCases: DayUseCases,
+    private val statsUseCases: StatsUseCases
 ) : ViewModel() {
 
     private val _day = MutableStateFlow(StatsState(LocalDate.MIN, 0, false, 0, 0f))
     val day: StateFlow<StatsState> = _day.asStateFlow()
+
+    private val _firstDate = MutableStateFlow(LocalDate.now())
+    val firstDate: StateFlow<LocalDate> = _firstDate.asStateFlow()
 
     private var selectDateJob: Job? = null
 
     init {
         val today = LocalDate.now()
         selectDay(today)
+        viewModelScope.launch {
+            statsUseCases.getFirstDayDate().collect {
+                _firstDate.value = it ?: LocalDate.now()
+            }
+        }
     }
 
     fun selectDay(date: LocalDate) {
@@ -52,8 +63,9 @@ class StatsViewModel(
             val settingsStore = application.settingsStore
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val dayUseCases = DayUseCases(dayRepository, settingsRepository)
+            val statsUseCases = StatsUseCases(dayRepository)
 
-            return StatsViewModel(dayUseCases) as T
+            return StatsViewModel(dayUseCases, statsUseCases) as T
         }
     }
 }

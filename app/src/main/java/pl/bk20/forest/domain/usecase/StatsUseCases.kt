@@ -7,4 +7,5 @@ class StatsUseCases(
 ) {
 
     val getWeek: GetWeek = GetWeekImpl(dayRepository)
+    val getFirstDayDate: GetFirstDate = GetFirstDateImpl(dayRepository)
 }
