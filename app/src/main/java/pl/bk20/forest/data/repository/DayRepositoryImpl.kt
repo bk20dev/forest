@@ -11,6 +11,10 @@ class DayRepositoryImpl(
     private val dao: DayDao
 ) : DayRepository {
 
+    override fun getFirstDay(): Flow<Day?> {
+        return dao.getFirstDay()
+    }
+
     override fun getDay(date: LocalDate): Flow<Day?> {
         return dao.getDay(date)
     }

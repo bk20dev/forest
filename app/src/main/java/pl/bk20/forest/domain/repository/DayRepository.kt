@@ -7,6 +7,8 @@ import java.time.LocalDate
 
 interface DayRepository {
 
+    fun getFirstDay(): Flow<Day?>
+
     fun getDay(date: LocalDate): Flow<Day?>
 
     fun getDays(range: ClosedRange<LocalDate>): Flow<List<Day>>
