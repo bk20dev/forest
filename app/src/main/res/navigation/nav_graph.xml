@@ -21,5 +21,10 @@
         android:name="pl.bk20.forest.presentation.StatsFragment"
         android:label="@string/stats"
         tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/statsChartFragment"
+        android:name="pl.bk20.forest.presentation.StatsChartFragment"
+        android:label="fragment_stats_chart"
+        tools:layout="@layout/fragment_stats_chart" />
 
 </navigation>
