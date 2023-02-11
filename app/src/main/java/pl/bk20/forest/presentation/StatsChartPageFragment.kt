@@ -12,20 +12,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import pl.bk20.forest.databinding.FragmentStatsChartBinding
+import pl.bk20.forest.databinding.FragmentStatsPageChartBinding
 import pl.bk20.forest.domain.model.Day
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 import com.google.android.material.R as RMaterial
 
-class StatsChartFragment : Fragment() {
+class StatsChartPageFragment : Fragment() {
 
     companion object {
         const val ARG_FIRST_DAY = "__first_day"
     }
 
-    private lateinit var binding: FragmentStatsChartBinding
+    private lateinit var binding: FragmentStatsPageChartBinding
 
     private val viewModel: StatsChartViewModel by viewModels { StatsChartViewModel.Factory }
     private val statsViewModel: StatsViewModel by activityViewModels { StatsViewModel }
@@ -76,7 +76,7 @@ class StatsChartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStatsChartBinding.inflate(inflater, container, false)
+        binding = FragmentStatsPageChartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
