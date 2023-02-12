@@ -10,17 +10,50 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import kotlinx.coroutines.launch
 import pl.bk20.forest.databinding.FragmentStatsChartBinding
+import pl.bk20.forest.util.firstDayOfWeek
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import kotlin.math.max
+
+class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+    private var pageCount = 0
+
+    fun getPageContaining(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>): Int {
+        val upcomingWeek = dateRange.endInclusive.plusWeeks(1)
+        val lastDayOfWeek = upcomingWeek.firstDayOfWeek.minusDays(1)
+        val period = Period.between(selectedDate, lastDayOfWeek)
+        return max(0, period.days / 7)
+    }
+
+    fun updatePageCount(range: ClosedRange<LocalDate>) {
+        pageCount = getPageContaining(range.start, range) + 1
+    }
+
+    override fun getItemCount(): Int = pageCount
+
+    override fun createFragment(position: Int): Fragment {
+        val fragment = StatsChartPageFragment()
+        fragment.arguments = Bundle().apply {
+            val date = LocalDate.now().minusDays(position * 7L)
+            putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date.firstDayOfWeek)
+        }
+        return fragment
+    }
+}
 
 class StatsChartFragment : Fragment() {
 
     private val statsViewModel: StatsViewModel by activityViewModels { StatsViewModel.Factory }
 
     private lateinit var binding: FragmentStatsChartBinding
+    private lateinit var chartPageAdapter: ChartPageAdapter
+
     private val shortDateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
 
     override fun onCreateView(
@@ -33,12 +66,18 @@ class StatsChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        chartPageAdapter = ChartPageAdapter(this)
+        binding.viewPagerChart.adapter = chartPageAdapter
+
         binding.buttonPreviousDay.setOnClickListener { changeSelectedDate(offset = -1) }
         binding.buttonNextDay.setOnClickListener { changeSelectedDate(offset = 1) }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                statsViewModel.day.collect { updateUserInterface(it.date) }
+                with(statsViewModel) {
+                    launch { day.collect { updateUserInterface(it.date) } }
+                    launch { dateRange.collect { updateChartRange(it) } }
+                }
             }
         }
     }
@@ -53,6 +92,19 @@ class StatsChartFragment : Fragment() {
             textSelectedDate.text = date.format(shortDateFormatter)
             buttonNextDay.isVisible = date.isBefore(LocalDate.now())
             buttonPreviousDay.isVisible = date.isAfter(LocalDate.MIN)
+            scrollChartTo(date, LocalDate.MIN..LocalDate.now())
         }
+    }
+
+    private fun updateChartRange(range: ClosedRange<LocalDate>) {
+        chartPageAdapter.updatePageCount(range)
+    }
+
+    private fun scrollChartTo(
+        selectedDate: LocalDate,
+        range: ClosedRange<LocalDate>
+    ) {
+        val pageIndex = chartPageAdapter.getPageContaining(selectedDate, range)
+        binding.viewPagerChart.currentItem = pageIndex
     }
 }
