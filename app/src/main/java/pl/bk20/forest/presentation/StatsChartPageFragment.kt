@@ -65,10 +65,19 @@ class StatsChartPageFragment : Fragment() {
         val value = it.steps / max.toFloat()
         val weekdayName = it.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale)
         val isSelected = it.date.isEqual(activeDay)
-        val color =
+        val barColor =
             if (isSelected) RMaterial.attr.colorPrimary
             else RMaterial.attr.colorPrimaryContainer
-        ChartAdapter.ChartValue(it.date, value, weekdayName, color)
+        val textColor =
+            if (isSelected) RMaterial.attr.colorPrimary
+            else RMaterial.attr.colorAccent
+        ChartAdapter.ChartValue(
+            it.date,
+            value = value,
+            label = weekdayName,
+            barColor = barColor,
+            textColor = textColor
+        )
     }
 
     override fun onCreateView(

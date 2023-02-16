@@ -23,6 +23,7 @@ import kotlin.math.max
 class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private var pageCount = 0
+    private var lastDate = LocalDate.now()
 
     fun getPageContaining(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>): Int {
         val upcomingWeek = dateRange.endInclusive.plusWeeks(1)
@@ -33,6 +34,7 @@ class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     fun updatePageCount(range: ClosedRange<LocalDate>) {
         pageCount = getPageContaining(range.start, range) + 1
+        lastDate = range.endInclusive
     }
 
     override fun getItemCount(): Int = pageCount
@@ -40,7 +42,7 @@ class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         val fragment = StatsChartPageFragment()
         fragment.arguments = Bundle().apply {
-            val date = LocalDate.now().minusDays(position * 7L)
+            val date = lastDate.minusDays(position * 7L)
             putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date.firstDayOfWeek)
         }
         return fragment
@@ -75,8 +77,8 @@ class StatsChartFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(statsViewModel) {
-                    launch { day.collect { updateUserInterface(it.date) } }
-                    launch { dateRange.collect { updateChartRange(it) } }
+                    launch { day.collect { updateUserInterface(it.date, dateRange.value) } }
+                    launch { dateRange.collect { updateUserInterface(day.value.date, it) } }
                 }
             }
         }
@@ -87,12 +89,15 @@ class StatsChartFragment : Fragment() {
         statsViewModel.selectDay(currentDate.plusDays(offset))
     }
 
-    private fun updateUserInterface(date: LocalDate) {
+    private fun updateUserInterface(date: LocalDate, dateRange: ClosedRange<LocalDate>) {
         binding.apply {
             textSelectedDate.text = date.format(shortDateFormatter)
-            buttonNextDay.isVisible = date.isBefore(LocalDate.now())
-            buttonPreviousDay.isVisible = date.isAfter(LocalDate.MIN)
-            scrollChartTo(date, LocalDate.MIN..LocalDate.now())
+            val lastDate = dateRange.endInclusive.firstDayOfWeek.plusWeeks(1).minusDays(1)
+            val firstDate = dateRange.start.firstDayOfWeek
+            buttonNextDay.isVisible = date.isBefore(lastDate)
+            buttonPreviousDay.isVisible = date.isAfter(firstDate)
+            updateChartRange(dateRange)
+            scrollChartTo(date, dateRange)
         }
     }
 

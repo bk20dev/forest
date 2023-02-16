@@ -30,8 +30,7 @@ class StatsViewModel(
     private var selectDateJob: Job? = null
 
     init {
-        val today = LocalDate.now()
-        selectDay(today)
+        selectDay(LocalDate.now())
         viewModelScope.launch {
             statsUseCases.getFirstDayDate().collect {
                 val firstDate = it ?: LocalDate.now()

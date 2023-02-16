@@ -33,9 +33,13 @@ class ChartAdapter<T>(
 
         fun bind(chartValue: ChartValue<T>, listener: OnValueSelected<T>) {
             binding.root.setOnClickListener { listener.onSelect(chartValue) }
-            binding.textSupporting.text = chartValue.label
+            binding.textSupporting.apply {
+                text = chartValue.label
+                val color = context.getThemeColor(chartValue.textColor)
+                setTextColor(color)
+            }
             binding.barFilled.apply {
-                val color = context.getThemeColor(chartValue.color)
+                val color = context.getThemeColor(chartValue.barColor)
                 backgroundTintList = ColorStateList.valueOf(color)
                 val params = layoutParams as ConstraintLayout.LayoutParams
                 params.matchConstraintPercentHeight = chartValue.value
@@ -65,7 +69,10 @@ class ChartAdapter<T>(
         val label: String,
 
         @AttrRes
-        val color: Int
+        val barColor: Int,
+
+        @AttrRes
+        val textColor: Int,
     )
 
     fun interface OnValueSelected<T> {
