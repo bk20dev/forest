@@ -13,62 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_chart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layoutDirection="rtl"
-            tools:background="?attr/colorSurfaceVariant" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_chart"
+            android:name="pl.bk20.forest.presentation.StatsChartFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
-
-            <ImageButton
-                android:id="@+id/button_previous_day"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/previous_day"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:src="@drawable/chevron_left_fill0_wght400_grad0_opsz24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorOnBackground" />
-
-            <TextView
-                android:id="@+id/text_selected_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceLabelLarge"
-                android:textColor="?attr/colorOnBackground"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Fri, 12 Jun" />
-
-            <ImageButton
-                android:id="@+id/button_next_day"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/next_day"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:src="@drawable/chevron_right_fill0_wght400_grad0_opsz24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorOnBackground" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:layout="@layout/fragment_stats_chart" />
 
         <androidx.cardview.widget.CardView
             style="@style/Widget.Material3.CardView.Filled"
