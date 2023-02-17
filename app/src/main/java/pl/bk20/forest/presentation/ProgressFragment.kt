@@ -33,21 +33,41 @@ class ProgressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.progress.collect { progress ->
-                    updateProgress(progress)
-                }
+                viewModel.progress.collect { progress -> updateUserInterface(progress) }
             }
         }
     }
 
-    private fun updateProgress(progress: ProgressState) {
+    private fun updateUserInterface(state: ProgressState) = state.apply {
         val numberFormat = DecimalFormat.getIntegerInstance()
+        val formattedStepCount = numberFormat.format(state.stepsTaken)
+        val dailyGoalStepCount = numberFormat.format(state.dailyGoal)
+        val dailyGoalText = getString(R.string.step_goal, dailyGoalStepCount)
+        val treeResource = getTreeResource(stepsTaken.toDouble() / dailyGoal)
+        val calorieText = getString(
+            R.string.calorie_burned_format, state.calorieBurned
+        )
+        val distanceText = getString(
+            R.string.distance_travelled_format, state.distanceTravelled
+        )
         binding.apply {
-            textStepCount.text = numberFormat.format(progress.steps)
-            val dailyGoalStepCount = numberFormat.format(progress.goal)
-            textDailyGoal.text = getString(R.string.step_goal, dailyGoalStepCount)
-            progressDailyGoal.max = progress.goal
-            progressDailyGoal.progress = progress.steps
+            textStepCount.text = formattedStepCount
+            textDailyGoal.text = dailyGoalText
+            progressDailyGoal.max = state.dailyGoal
+            progressDailyGoal.progress = state.stepsTaken
+            imageTree.setImageResource(treeResource)
+            textCalorieBurned.text = calorieText
+            textDistanceTravelled.text = distanceText
         }
     }
+
+    private fun getTreeResource(progress: Double) =
+        when {
+            progress < .2 -> R.drawable.stage_1
+            progress < .4 -> R.drawable.stage_2
+            progress < .6 -> R.drawable.stage_3
+            progress < .8 -> R.drawable.stage_4
+            progress < 1 -> R.drawable.stage_5
+            else -> R.drawable.stage_6
+        }
 }

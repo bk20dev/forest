@@ -12,13 +12,14 @@ import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.domain.usecase.DayUseCases
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 class ProgressViewModel(
     private val dayUseCases: DayUseCases,
     initialDate: LocalDate = LocalDate.now()
 ) : ViewModel() {
 
-    private val _progress = MutableStateFlow(ProgressState(LocalDate.MIN, 0, 0))
+    private val _progress = MutableStateFlow(ProgressState(LocalDate.MIN, 0, 0, 0, 0f))
     val progress: StateFlow<ProgressState> = _progress.asStateFlow()
 
     private var getProgressJob: Job? = null
@@ -33,8 +34,10 @@ class ProgressViewModel(
         getProgressJob = dayUseCases.getDay(date).onEach { day ->
             _progress.value = progress.value.copy(
                 date = day.date,
-                steps = day.steps,
-                goal = day.goal
+                stepsTaken = day.steps,
+                dailyGoal = day.goal,
+                calorieBurned = day.calorieBurned.roundToInt(),
+                distanceTravelled = day.distanceTravelled
             )
         }.launchIn(viewModelScope)
     }

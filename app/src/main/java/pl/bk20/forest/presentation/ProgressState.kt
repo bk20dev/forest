@@ -4,6 +4,8 @@ import java.time.LocalDate
 
 data class ProgressState(
     val date: LocalDate,
-    val steps: Int,
-    val goal: Int
+    val stepsTaken: Int,
+    val dailyGoal: Int,
+    val calorieBurned: Int,
+    val distanceTravelled: Float
 )
