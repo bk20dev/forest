@@ -26,6 +26,9 @@
     <string name="tree">Tree</string>
     <string name="stats">Stats</string>
 
+    <!-- Forest -->
+    <string name="trees">trees</string>
+
     <!-- Stats -->
     <string name="previous_day">Previous day</string>
     <string name="next_day">Next day</string>

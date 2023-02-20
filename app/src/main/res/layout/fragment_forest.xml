@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ForestFragment">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/image_ground"
         android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/shape_ground"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id='@+id/constraint_layout_trees'
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginBottom="-40dp"
+        app:layout_constraintBottom_toTopOf="@id/image_ground" />
+
+    <TextView
+        android:id="@+id/text_trees_collected"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceDisplayMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12" />
 
-        <TextView
-            android:id="@+id/text_trees_collected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/trees"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintBaseline_toBaselineOf="@id/text_trees_collected"
+        app:layout_constraintStart_toEndOf="@id/text_trees_collected" />
 
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

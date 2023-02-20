@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import pl.bk20.forest.R
 import pl.bk20.forest.databinding.FragmentForestBinding
+import kotlin.random.Random
 
 class ForestFragment : Fragment() {
 
@@ -37,5 +42,27 @@ class ForestFragment : Fragment() {
 
     private fun updateUserInterface(forestState: ForestState) {
         binding.textTreesCollected.text = forestState.treeCount.toString()
+        generateTrees(forestState.treeCount)
+    }
+
+    private fun generateTrees(treeCount: Int) {
+        val parentLayout = binding.constraintLayoutTrees
+        parentLayout.removeAllViews()
+        repeat(treeCount) {
+            val horizontalPosition = it.toFloat() / treeCount + Random.nextFloat() / 4
+            createTree(parentLayout, horizontalPosition)
+        }
+    }
+
+    private fun createTree(parentLayout: ConstraintLayout, horizontalPosition: Float) {
+        val treeImageView = ImageView(context)
+        treeImageView.setImageResource(R.drawable.tree_collected)
+        parentLayout.addView(treeImageView)
+        treeImageView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            startToStart = parentLayout.id
+            endToEnd = parentLayout.id
+            bottomToBottom = parentLayout.id
+            horizontalBias = horizontalPosition
+        }
     }
 }
