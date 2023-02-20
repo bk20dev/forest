@@ -48,8 +48,11 @@ class ForestFragment : Fragment() {
     private fun generateTrees(treeCount: Int) {
         val parentLayout = binding.constraintLayoutTrees
         parentLayout.removeAllViews()
+        val gapCount = treeCount + 1
         repeat(treeCount) {
-            val horizontalPosition = it.toFloat() / treeCount + Random.nextFloat() / 4
+            val fixedPosition = (it + 1f) / gapCount
+            val randomOffset = (Random.nextFloat() - 0.5f) / 5
+            val horizontalPosition = fixedPosition + randomOffset
             createTree(parentLayout, horizontalPosition)
         }
     }
