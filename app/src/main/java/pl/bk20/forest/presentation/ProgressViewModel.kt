@@ -19,7 +19,16 @@ class ProgressViewModel(
     initialDate: LocalDate = LocalDate.now()
 ) : ViewModel() {
 
-    private val _progress = MutableStateFlow(ProgressState(LocalDate.MIN, 0, 0, 0, 0f))
+    private val _progress = MutableStateFlow(
+        ProgressState(
+            date = LocalDate.MIN,
+            stepsTaken = 0,
+            dailyGoal = 0,
+            carbonDioxideSaved = 0f,
+            calorieBurned = 0,
+            distanceTravelled = 0f,
+        )
+    )
     val progress: StateFlow<ProgressState> = _progress.asStateFlow()
 
     private var getProgressJob: Job? = null
@@ -36,6 +45,7 @@ class ProgressViewModel(
                 date = day.date,
                 stepsTaken = day.steps,
                 dailyGoal = day.goal,
+                carbonDioxideSaved = day.carbonDioxideSaved,
                 calorieBurned = day.calorieBurned.roundToInt(),
                 distanceTravelled = day.distanceTravelled
             )

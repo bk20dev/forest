@@ -32,6 +32,14 @@
         <item quantity="other">trees</item>
     </plurals>
 
+    <!-- Progress -->
+    <string name="carbon_dioxide_saved">CO₂ saved</string>
+    <string name="carbon_dioxide_saved_format">%.2f kg</string>
+    <string name="calorie_burned">Calorie burned</string>
+    <string name="calorie_burned_format">%d kcal</string>
+    <string name="distance_travelled">Distance travelled</string>
+    <string name="distance_travelled_format">%.2f km</string>
+
     <!-- Stats -->
     <string name="previous_day">Previous day</string>
     <string name="next_day">Next day</string>
@@ -42,10 +50,6 @@
     </plurals>
     <string name="tree_collected">Tree collected</string>
     <string name="daily_goal_reached">Daily goal reached</string>
-    <string name="calorie_burned">Calorie burned</string>
-    <string name="calorie_burned_format">%d kcal</string>
-    <string name="distance_travelled">Distance travelled</string>
-    <string name="distance_travelled_format">%.2f km</string>
 
     <!-- Preferences -->
     <string name="settings">Settings</string>

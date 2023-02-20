@@ -24,6 +24,11 @@ data class Day(
 
     companion object
 
+    val carbonDioxideSaved
+        get() = run {
+            steps / 1000f * 0.1925f
+        }
+
     val distanceTravelled
         get() = run {
             val distanceCentimeters = steps * stepLength

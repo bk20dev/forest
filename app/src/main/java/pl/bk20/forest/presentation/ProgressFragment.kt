@@ -38,24 +38,42 @@ class ProgressFragment : Fragment() {
         }
     }
 
-    private fun updateUserInterface(state: ProgressState) = state.apply {
+    private fun updateUserInterface(state: ProgressState) {
+        updateProgress(state)
+        updateTree(state)
+        updateTiles(state)
+    }
+
+    private fun updateProgress(state: ProgressState) = state.apply {
         val numberFormat = DecimalFormat.getIntegerInstance()
-        val formattedStepCount = numberFormat.format(state.stepsTaken)
-        val dailyGoalStepCount = numberFormat.format(state.dailyGoal)
+        val formattedStepCount = numberFormat.format(stepsTaken)
+        val dailyGoalStepCount = numberFormat.format(dailyGoal)
         val dailyGoalText = getString(R.string.step_goal, dailyGoalStepCount)
-        val treeResource = getTreeResource(stepsTaken.toDouble() / dailyGoal)
-        val calorieText = getString(
-            R.string.calorie_burned_format, state.calorieBurned
-        )
-        val distanceText = getString(
-            R.string.distance_travelled_format, state.distanceTravelled
-        )
         binding.apply {
             textStepCount.text = formattedStepCount
             textDailyGoal.text = dailyGoalText
-            progressDailyGoal.max = state.dailyGoal
-            progressDailyGoal.progress = state.stepsTaken
-            imageTree.setImageResource(treeResource)
+            progressDailyGoal.max = dailyGoal
+            progressDailyGoal.progress = stepsTaken
+        }
+    }
+
+    private fun updateTree(state: ProgressState) = state.apply {
+        val treeResource = getTreeResource(stepsTaken.toDouble() / dailyGoal)
+        binding.imageTree.setImageResource(treeResource)
+    }
+
+    private fun updateTiles(state: ProgressState) = state.apply {
+        val carbonDioxideText = getString(
+            R.string.carbon_dioxide_saved_format, carbonDioxideSaved
+        )
+        val calorieText = getString(
+            R.string.calorie_burned_format, calorieBurned
+        )
+        val distanceText = getString(
+            R.string.distance_travelled_format, distanceTravelled
+        )
+        binding.apply {
+            textCarbonDioxideSaved.text = carbonDioxideText
             textCalorieBurned.text = calorieText
             textDistanceTravelled.text = distanceText
         }
