@@ -27,7 +27,10 @@
     <string name="stats">Stats</string>
 
     <!-- Forest -->
-    <string name="trees">trees</string>
+    <plurals name="trees">
+        <item quantity="one">tree</item>
+        <item quantity="other">trees</item>
+    </plurals>
 
     <!-- Stats -->
     <string name="previous_day">Previous day</string>

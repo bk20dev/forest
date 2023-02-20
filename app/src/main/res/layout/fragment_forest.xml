@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ForestFragment">
 
+    <TextView
+        android:id="@+id/text_trees_collected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceDisplayMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/text_trees_collected_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintBaseline_toBaselineOf="@id/text_trees_collected"
+        app:layout_constraintStart_toEndOf="@id/text_trees_collected"
+        tools:text="trees" />
+
     <ImageView
         android:id="@+id/image_ground"
         android:layout_width="match_parent"
@@ -20,27 +43,5 @@
         android:layout_height="400dp"
         android:layout_marginBottom="-40dp"
         app:layout_constraintBottom_toTopOf="@id/image_ground" />
-
-    <TextView
-        android:id="@+id/text_trees_collected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textAppearance="?attr/textAppearanceDisplayMedium"
-        android:textColor="?attr/colorOnSurface"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="12" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="@string/trees"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="?attr/colorOnSurface"
-        app:layout_constraintBaseline_toBaselineOf="@id/text_trees_collected"
-        app:layout_constraintStart_toEndOf="@id/text_trees_collected" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

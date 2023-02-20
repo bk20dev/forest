@@ -41,7 +41,11 @@ class ForestFragment : Fragment() {
     }
 
     private fun updateUserInterface(forestState: ForestState) {
-        binding.textTreesCollected.text = forestState.treeCount.toString()
+        val treeCount = forestState.treeCount
+        binding.apply {
+            textTreesCollected.text = treeCount.toString()
+            textTreesCollectedLabel.text = resources.getQuantityString(R.plurals.trees, treeCount)
+        }
         generateTrees(forestState.treeCount)
     }
 
