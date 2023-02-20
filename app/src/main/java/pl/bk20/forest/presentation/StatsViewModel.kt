@@ -21,7 +21,17 @@ class StatsViewModel(
     private val statsUseCases: StatsUseCases
 ) : ViewModel() {
 
-    private val _day = MutableStateFlow(StatsState(LocalDate.MIN, 0, false, 0, 0f))
+    private val _day = MutableStateFlow(
+        StatsState(
+            date = LocalDate.MIN,
+            stepsTaken = 0,
+            treeCollected = false,
+            calorieBurned = 0,
+            distanceTravelled = 0f,
+            carbonDioxideSaved = 0f,
+        )
+    )
+
     val day: StateFlow<StatsState> = _day.asStateFlow()
 
     private val _dateRange = MutableStateFlow(LocalDate.now()..LocalDate.now())
@@ -42,12 +52,13 @@ class StatsViewModel(
     fun selectDay(date: LocalDate) {
         selectDateJob?.cancel()
         selectDateJob = dayUseCases.getDay(date).onEach {
-            _day.value = StatsState(
+            _day.value = day.value.copy(
                 date = it.date,
                 stepsTaken = it.steps,
                 treeCollected = it.steps >= it.goal,
                 calorieBurned = it.calorieBurned.roundToInt(),
-                distanceTravelled = it.distanceTravelled
+                distanceTravelled = it.distanceTravelled,
+                carbonDioxideSaved = it.carbonDioxideSaved
             )
         }.launchIn(viewModelScope)
     }

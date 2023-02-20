@@ -37,19 +37,25 @@ class StatsFragment : Fragment() {
         }
     }
 
-    private fun updateUserInterface(state: StatsState) {
+    private fun updateUserInterface(state: StatsState) = state.apply {
         val stepsText = resources.getQuantityString(
-            R.plurals.step_count_format, state.stepsTaken, state.stepsTaken
+            R.plurals.step_count_format, stepsTaken, stepsTaken
         )
         val calorieText = getString(
-            R.string.calorie_burned_format, state.calorieBurned
+            R.string.calorie_burned_format, calorieBurned
         )
         val distanceText = getString(
-            R.string.distance_travelled_format, state.distanceTravelled
+            R.string.distance_travelled_format, distanceTravelled
         )
-        binding.textStepCount.text = stepsText
-        binding.viewGroupTree.isVisible = state.treeCollected
-        binding.textCalorieBurned.text = calorieText
-        binding.textDistanceTravelled.text = distanceText
+        val carbonDioxideText = getString(
+            R.string.carbon_dioxide_saved_format, carbonDioxideSaved
+        )
+        binding.apply {
+            textStepCount.text = stepsText
+            viewGroupTree.isVisible = treeCollected
+            textCalorieBurned.text = calorieText
+            textDistanceTravelled.text = distanceText
+            textCarbonDioxideSaved.text = carbonDioxideText
+        }
     }
 }
