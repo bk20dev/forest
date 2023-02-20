@@ -6,7 +6,7 @@ data class ProgressState(
     val date: LocalDate,
     val stepsTaken: Int,
     val dailyGoal: Int,
-    val carbonDioxideSaved: Float,
     val calorieBurned: Int,
-    val distanceTravelled: Float
+    val distanceTravelled: Float,
+    val carbonDioxideSaved: Float,
 )

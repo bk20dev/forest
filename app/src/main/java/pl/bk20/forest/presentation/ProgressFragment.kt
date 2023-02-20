@@ -63,19 +63,19 @@ class ProgressFragment : Fragment() {
     }
 
     private fun updateTiles(state: ProgressState) = state.apply {
-        val carbonDioxideText = getString(
-            R.string.carbon_dioxide_saved_format, carbonDioxideSaved
-        )
         val calorieText = getString(
             R.string.calorie_burned_format, calorieBurned
         )
         val distanceText = getString(
             R.string.distance_travelled_format, distanceTravelled
         )
+        val carbonDioxideText = getString(
+            R.string.carbon_dioxide_saved_format, carbonDioxideSaved
+        )
         binding.apply {
-            textCarbonDioxideSaved.text = carbonDioxideText
             textCalorieBurned.text = calorieText
             textDistanceTravelled.text = distanceText
+            textCarbonDioxideSaved.text = carbonDioxideText
         }
     }
 

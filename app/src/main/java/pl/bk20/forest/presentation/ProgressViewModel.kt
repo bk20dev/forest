@@ -24,9 +24,9 @@ class ProgressViewModel(
             date = LocalDate.MIN,
             stepsTaken = 0,
             dailyGoal = 0,
-            carbonDioxideSaved = 0f,
             calorieBurned = 0,
             distanceTravelled = 0f,
+            carbonDioxideSaved = 0f,
         )
     )
     val progress: StateFlow<ProgressState> = _progress.asStateFlow()
@@ -45,9 +45,9 @@ class ProgressViewModel(
                 date = day.date,
                 stepsTaken = day.steps,
                 dailyGoal = day.goal,
-                carbonDioxideSaved = day.carbonDioxideSaved,
                 calorieBurned = day.calorieBurned.roundToInt(),
-                distanceTravelled = day.distanceTravelled
+                distanceTravelled = day.distanceTravelled,
+                carbonDioxideSaved = day.carbonDioxideSaved,
             )
         }.launchIn(viewModelScope)
     }
