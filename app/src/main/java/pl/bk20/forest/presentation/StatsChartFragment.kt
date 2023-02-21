@@ -13,37 +13,30 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import kotlinx.coroutines.launch
 import pl.bk20.forest.databinding.FragmentStatsChartBinding
-import pl.bk20.forest.util.firstDayOfWeek
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import kotlin.math.max
 
 class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    private var pageCount = 0
-    private var lastDate = LocalDate.now()
+    var dateRange = LocalDate.now()..LocalDate.now()
 
-    fun getPageContaining(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>): Int {
-        val upcomingWeek = dateRange.endInclusive.plusWeeks(1)
-        val lastDayOfWeek = upcomingWeek.firstDayOfWeek.minusDays(1)
-        val period = Period.between(selectedDate, lastDayOfWeek)
-        return max(0, period.days / 7)
+    fun getPageContaining(selectedDate: LocalDate): Int {
+        val period = Period.between(selectedDate, dateRange.endInclusive)
+        return (period.days / 7).coerceIn(0, itemCount)
     }
 
-    fun updatePageCount(range: ClosedRange<LocalDate>) {
-        pageCount = getPageContaining(range.start, range) + 1
-        lastDate = range.endInclusive
+    override fun getItemCount(): Int = dateRange.run {
+        val period = Period.between(start, endInclusive)
+        return period.days / 7 + 1
     }
-
-    override fun getItemCount(): Int = pageCount
 
     override fun createFragment(position: Int): Fragment {
         val fragment = StatsChartPageFragment()
         fragment.arguments = Bundle().apply {
-            val date = lastDate.minusDays(position * 7L)
-            putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date.firstDayOfWeek)
+            val daysToSubtract = position * 7 + 6
+            val date = dateRange.endInclusive.minusDays(daysToSubtract.toLong())
+            putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date)
         }
         return fragment
     }
@@ -56,7 +49,7 @@ class StatsChartFragment : Fragment() {
     private lateinit var binding: FragmentStatsChartBinding
     private lateinit var chartPageAdapter: ChartPageAdapter
 
-    private val shortDateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+    private val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM dd")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -89,27 +82,20 @@ class StatsChartFragment : Fragment() {
         statsViewModel.selectDay(currentDate.plusDays(offset))
     }
 
-    private fun updateUserInterface(date: LocalDate, dateRange: ClosedRange<LocalDate>) {
+    private fun updateUserInterface(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>) {
         binding.apply {
-            textSelectedDate.text = date.format(shortDateFormatter)
-            val lastDate = dateRange.endInclusive.firstDayOfWeek.plusWeeks(1).minusDays(1)
-            val firstDate = dateRange.start.firstDayOfWeek
-            buttonNextDay.isVisible = date.isBefore(lastDate)
-            buttonPreviousDay.isVisible = date.isAfter(firstDate)
-            updateChartRange(dateRange)
-            scrollChartTo(date, dateRange)
+            textSelectedDate.text = selectedDate.format(dateFormatter)
+            buttonPreviousDay.isVisible = selectedDate.isAfter(dateRange.start)
+            buttonNextDay.isVisible = selectedDate.isBefore(dateRange.endInclusive)
+            chartPageAdapter.dateRange = dateRange
+            scrollChartTo(selectedDate)
         }
-    }
-
-    private fun updateChartRange(range: ClosedRange<LocalDate>) {
-        chartPageAdapter.updatePageCount(range)
     }
 
     private fun scrollChartTo(
         selectedDate: LocalDate,
-        range: ClosedRange<LocalDate>
     ) {
-        val pageIndex = chartPageAdapter.getPageContaining(selectedDate, range)
+        val pageIndex = chartPageAdapter.getPageContaining(selectedDate)
         binding.viewPagerChart.currentItem = pageIndex
     }
 }
