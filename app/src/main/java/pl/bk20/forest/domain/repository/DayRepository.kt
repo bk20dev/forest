@@ -13,6 +13,8 @@ interface DayRepository {
 
     fun getDay(date: LocalDate): Flow<Day?>
 
+    suspend fun getAllDays(): List<Day>
+
     fun getDays(range: ClosedRange<LocalDate>): Flow<List<Day>>
 
     suspend fun upsertDay(day: Day)

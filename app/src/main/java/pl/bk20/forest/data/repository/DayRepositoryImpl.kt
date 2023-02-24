@@ -23,6 +23,10 @@ class DayRepositoryImpl(
         return dao.getDay(date)
     }
 
+    override suspend fun getAllDays(): List<Day> {
+        return dao.getAllDays()
+    }
+
     override fun getDays(range: ClosedRange<LocalDate>): Flow<List<Day>> {
         return dao.getDays(range.start, range.endInclusive)
     }
