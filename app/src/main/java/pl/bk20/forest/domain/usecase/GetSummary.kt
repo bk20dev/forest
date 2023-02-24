@@ -1,8 +1,8 @@
 package pl.bk20.forest.domain.usecase
 
+import pl.bk20.forest.domain.model.StatsSummary
+import pl.bk20.forest.domain.model.of
 import pl.bk20.forest.domain.repository.DayRepository
-import pl.bk20.forest.presentation.StatsSummary
-import pl.bk20.forest.presentation.of
 
 interface GetSummary {
     suspend operator fun invoke(): StatsSummary

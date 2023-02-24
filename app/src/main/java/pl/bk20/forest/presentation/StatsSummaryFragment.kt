@@ -38,7 +38,7 @@ class StatsSummaryFragment : Fragment() {
         }
     }
 
-    private fun updateUserInterface(statsSummary: StatsSummary) = statsSummary.apply {
+    private fun updateUserInterface(state: StatsSummaryState) = state.apply {
         val treesText = resources.getQuantityString(
             R.plurals.trees_collected_format, treesCollected, treesCollected
         )

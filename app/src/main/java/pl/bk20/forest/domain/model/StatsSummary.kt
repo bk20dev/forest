@@ -1,6 +1,4 @@
-package pl.bk20.forest.presentation
-
-import pl.bk20.forest.domain.model.Day
+package pl.bk20.forest.domain.model
 
 data class StatsSummary(
     val treesCollected: Int = 0,

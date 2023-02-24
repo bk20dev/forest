@@ -17,8 +17,8 @@ class StatsSummaryViewModel(
     private val statsSummaryUseCases: StatsSummaryUseCases
 ) : ViewModel() {
 
-    private val _statsStatsSummary = MutableStateFlow(StatsSummary())
-    val statsSummary: StateFlow<StatsSummary> = _statsStatsSummary.asStateFlow()
+    private val _statsStatsSummary = MutableStateFlow(StatsSummaryState())
+    val statsSummary: StateFlow<StatsSummaryState> = _statsStatsSummary.asStateFlow()
 
     init {
         refreshStatsSummary()
@@ -29,7 +29,20 @@ class StatsSummaryViewModel(
     fun refreshStatsSummary() {
         refreshStatsSummaryJob?.cancel()
         refreshStatsSummaryJob = viewModelScope.launch {
-            _statsStatsSummary.value = statsSummaryUseCases.getSummary()
+            _statsStatsSummary.value = statsSummary.value.copy(
+                isRefreshing = true
+            )
+            val updatedSummary = statsSummaryUseCases.getSummary()
+            updatedSummary.run {
+                _statsStatsSummary.value = statsSummary.value.copy(
+                    isRefreshing = false,
+                    treesCollected = treesCollected,
+                    stepsTaken = stepsTaken,
+                    calorieBurned = calorieBurned,
+                    distanceTravelled = distanceTravelled,
+                    carbonDioxideSaved = carbonDioxideSaved,
+                )
+            }
         }
     }
 
