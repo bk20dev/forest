@@ -16,13 +16,13 @@ import pl.bk20.forest.domain.usecase.StatsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
-class StatsViewModel(
+class DailyStatsViewModel(
     private val dayUseCases: DayUseCases,
     private val statsUseCases: StatsUseCases
 ) : ViewModel() {
 
     private val _day = MutableStateFlow(
-        StatsState(
+        DailyStatsState(
             date = LocalDate.MIN,
             stepsTaken = 0,
             treeCollected = false,
@@ -32,7 +32,7 @@ class StatsViewModel(
         )
     )
 
-    val day: StateFlow<StatsState> = _day.asStateFlow()
+    val day: StateFlow<DailyStatsState> = _day.asStateFlow()
 
     private val _dateRange = MutableStateFlow(LocalDate.now()..LocalDate.now())
     val dateRange: StateFlow<ClosedRange<LocalDate>> = _dateRange.asStateFlow()
@@ -76,7 +76,7 @@ class StatsViewModel(
             val dayUseCases = DayUseCases(dayRepository, settingsRepository)
             val statsUseCases = StatsUseCases(dayRepository)
 
-            return StatsViewModel(dayUseCases, statsUseCases) as T
+            return DailyStatsViewModel(dayUseCases, statsUseCases) as T
         }
     }
 }

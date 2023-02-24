@@ -12,20 +12,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import pl.bk20.forest.R
-import pl.bk20.forest.databinding.FragmentStatsBinding
+import pl.bk20.forest.databinding.FragmentDailyStatsBinding
 
-class StatsFragment : Fragment() {
+class DailyStatsFragment : Fragment() {
 
-    private val viewModel: StatsViewModel by activityViewModels { StatsViewModel.Factory }
+    private val viewModel: DailyStatsViewModel by activityViewModels { DailyStatsViewModel.Factory }
 
-    private lateinit var binding: FragmentStatsBinding
+    private lateinit var binding: FragmentDailyStatsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStatsBinding.inflate(inflater, container, false)
+        binding = FragmentDailyStatsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,7 +37,7 @@ class StatsFragment : Fragment() {
         }
     }
 
-    private fun updateUserInterface(state: StatsState) = state.apply {
+    private fun updateUserInterface(state: DailyStatsState) = state.apply {
         val stepsText = resources.getQuantityString(
             R.plurals.step_count_format, stepsTaken, stepsTaken
         )

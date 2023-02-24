@@ -60,7 +60,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorOnBackground" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

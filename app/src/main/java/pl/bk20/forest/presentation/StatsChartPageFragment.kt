@@ -28,10 +28,10 @@ class StatsChartPageFragment : Fragment() {
     private lateinit var binding: FragmentStatsPageChartBinding
 
     private val viewModel: StatsChartViewModel by viewModels { StatsChartViewModel.Factory }
-    private val statsViewModel: StatsViewModel by activityViewModels { StatsViewModel }
+    private val dailyStatsViewModel: DailyStatsViewModel by activityViewModels { DailyStatsViewModel }
 
     private val chartAdapter = ChartAdapter {
-        statsViewModel.selectDay(it.id)
+        dailyStatsViewModel.selectDay(it.id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class StatsChartPageFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 val weekFlow = viewModel.week
-                val dayFlow = statsViewModel.day
+                val dayFlow = dailyStatsViewModel.day
 
                 weekFlow.combine(dayFlow) { week, day ->
                     val highestStepsValue = week.maxOfOrNull { it.steps } ?: 1

@@ -44,7 +44,7 @@ class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
 class StatsChartFragment : Fragment() {
 
-    private val statsViewModel: StatsViewModel by activityViewModels { StatsViewModel.Factory }
+    private val dailyStatsViewModel: DailyStatsViewModel by activityViewModels { DailyStatsViewModel.Factory }
 
     private lateinit var binding: FragmentStatsChartBinding
     private lateinit var chartPageAdapter: ChartPageAdapter
@@ -69,7 +69,7 @@ class StatsChartFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                with(statsViewModel) {
+                with(dailyStatsViewModel) {
                     launch { day.collect { updateUserInterface(it.date, dateRange.value) } }
                     launch { dateRange.collect { updateUserInterface(day.value.date, it) } }
                 }
@@ -78,8 +78,8 @@ class StatsChartFragment : Fragment() {
     }
 
     private fun changeSelectedDate(offset: Long) {
-        val currentDate = statsViewModel.day.value.date
-        statsViewModel.selectDay(currentDate.plusDays(offset))
+        val currentDate = dailyStatsViewModel.day.value.date
+        dailyStatsViewModel.selectDay(currentDate.plusDays(offset))
     }
 
     private fun updateUserInterface(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>) {
