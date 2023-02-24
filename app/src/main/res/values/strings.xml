@@ -50,6 +50,10 @@
     </plurals>
     <string name="tree_collected">Tree collected</string>
     <string name="trees_collected">Trees collected</string>
+    <plurals name="trees_collected_format">
+        <item quantity="one">%d tree</item>
+        <item quantity="other">%d trees</item>
+    </plurals>
     <string name="daily_goal_reached">Daily goal reached</string>
 
     <!-- Preferences -->
