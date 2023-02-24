@@ -49,6 +49,7 @@
         <item quantity="other">%d steps</item>
     </plurals>
     <string name="tree_collected">Tree collected</string>
+    <string name="trees_collected">Trees collected</string>
     <string name="daily_goal_reached">Daily goal reached</string>
 
     <!-- Preferences -->
