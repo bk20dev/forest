@@ -31,6 +31,10 @@ class StatsSummaryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.swipeRefreshContainer.setOnRefreshListener {
+            viewModel.refreshStatsSummary()
+        }
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.statsSummary.collect { updateUserInterface(it) }
@@ -55,6 +59,7 @@ class StatsSummaryFragment : Fragment() {
             R.string.carbon_dioxide_saved_format, carbonDioxideSaved
         )
         binding.apply {
+            swipeRefreshContainer.isRefreshing = state.isRefreshing
             textTreesCollected.text = treesText
             textStepCount.text = stepsText
             textCalorieBurned.text = calorieText

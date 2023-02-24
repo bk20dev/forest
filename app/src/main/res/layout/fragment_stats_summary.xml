@@ -1,331 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".presentation.StatsSummaryFragment">
 
-    <androidx.cardview.widget.CardView
-        style="@style/Widget.Material3.CardView.Filled"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardBackgroundColor="?attr/colorPrimaryContainer"
-        app:cardCornerRadius="24dp">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp">
+            android:padding="24dp">
 
-            <View
-                android:id="@+id/view_tree_background"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="?attr/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
-                app:layout_constraintEnd_toEndOf="@+id/view_tree_background"
-                app:layout_constraintStart_toStartOf="@+id/view_tree_background"
-                app:layout_constraintTop_toTopOf="@+id/view_tree_background"
-                app:srcCompat="@drawable/nature_fill0_wght400_grad0_opsz24"
-                app:tint="?attr/colorOnPrimary" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="24dp">
 
-            <TextView
-                android:id="@+id/text_trees_collected"
-                android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
+
+                    <View
+                        android:id="@+id/view_tree_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_tree_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_tree_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_tree_background"
+                        app:srcCompat="@drawable/nature_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnPrimary" />
+
+                    <TextView
+                        android:id="@+id/text_trees_collected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_trees_collected_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_tree_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_tree_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23 trees" />
+
+                    <TextView
+                        android:id="@+id/text_trees_collected_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trees_collected"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_trees_collected"
+                        app:layout_constraintTop_toBottomOf="@+id/text_trees_collected"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/text_trees_collected_label"
-                app:layout_constraintStart_toEndOf="@+id/view_tree_background"
-                app:layout_constraintTop_toTopOf="@+id/view_tree_background"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="23 trees" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                app:cardCornerRadius="24dp">
 
-            <TextView
-                android:id="@+id/text_trees_collected_label"
-                android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
+
+                    <View
+                        android:id="@+id/view_steps_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_steps_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_steps_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_steps_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_steps_background"
+                        app:srcCompat="@drawable/steps_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnSecondary" />
+
+                    <TextView
+                        android:id="@+id/text_step_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_step_count_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_steps_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_steps_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="6500 steps" />
+
+                    <TextView
+                        android:id="@+id/text_step_count_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_count"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_steps_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_step_count"
+                        app:layout_constraintTop_toBottomOf="@+id/text_step_count"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/trees_collected"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
-                app:layout_constraintStart_toStartOf="@+id/text_trees_collected"
-                app:layout_constraintTop_toBottomOf="@+id/text_trees_collected"
-                app:layout_constraintVertical_chainStyle="packed" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="?attr/colorTertiaryContainer"
+                app:cardCornerRadius="24dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
 
-    </androidx.cardview.widget.CardView>
+                    <View
+                        android:id="@+id/view_calorie_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorTertiary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardBackgroundColor="?attr/colorSecondaryContainer"
-        app:cardCornerRadius="24dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_calorie_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_calorie_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_calorie_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_calorie_background"
+                        app:srcCompat="@drawable/local_fire_department_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnTertiary" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp">
+                    <TextView
+                        android:id="@+id/text_calorie_burned"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_calorie_burned_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_calorie_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_calorie_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="210 kcal" />
 
-            <View
-                android:id="@+id/view_steps_background"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="?attr/colorSecondary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_calorie_burned_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/calorie_burned"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_calorie_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_calorie_burned"
+                        app:layout_constraintTop_toBottomOf="@+id/text_calorie_burned"
+                        app:layout_constraintVertical_chainStyle="packed" />
 
-            <ImageView
-                android:layout_width="wrap_content"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@+id/view_steps_background"
-                app:layout_constraintEnd_toEndOf="@+id/view_steps_background"
-                app:layout_constraintStart_toStartOf="@+id/view_steps_background"
-                app:layout_constraintTop_toTopOf="@+id/view_steps_background"
-                app:srcCompat="@drawable/steps_fill0_wght400_grad0_opsz24"
-                app:tint="?attr/colorOnSecondary" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="24dp">
 
-            <TextView
-                android:id="@+id/text_step_count"
-                android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
+
+                    <View
+                        android:id="@+id/view_distance_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_distance_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_distance_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_distance_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_distance_background"
+                        app:srcCompat="@drawable/conversion_path_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnPrimary" />
+
+                    <TextView
+                        android:id="@+id/text_distance_travelled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_distance_travelled_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_distance_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_distance_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="4.1 km" />
+
+                    <TextView
+                        android:id="@+id/text_distance_travelled_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/distance_travelled"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_distance_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_distance_travelled"
+                        app:layout_constraintTop_toBottomOf="@+id/text_distance_travelled"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/text_step_count_label"
-                app:layout_constraintStart_toEndOf="@+id/view_steps_background"
-                app:layout_constraintTop_toTopOf="@+id/view_steps_background"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="6500 steps" />
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                app:cardCornerRadius="24dp">
 
-            <TextView
-                android:id="@+id/text_step_count_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/step_count"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/view_steps_background"
-                app:layout_constraintStart_toStartOf="@+id/text_step_count"
-                app:layout_constraintTop_toBottomOf="@+id/text_step_count"
-                app:layout_constraintVertical_chainStyle="packed" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <View
+                        android:id="@+id/view_carbon_dioxide_background"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="?attr/colorSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintEnd_toEndOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintStart_toStartOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_carbon_dioxide_background"
+                        app:srcCompat="@drawable/bubble_chart_fill0_wght400_grad0_opsz24"
+                        app:tint="?attr/colorOnSecondary" />
 
-    <androidx.cardview.widget.CardView
-        style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardBackgroundColor="?attr/colorTertiaryContainer"
-        app:cardCornerRadius="24dp">
+                    <TextView
+                        android:id="@+id/text_carbon_dioxide_saved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="2dp"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:layout_constraintBottom_toTopOf="@+id/text_carbon_dioxide_saved_label"
+                        app:layout_constraintStart_toEndOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintTop_toTopOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="1.43 kg" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp">
+                    <TextView
+                        android:id="@+id/text_carbon_dioxide_saved_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/carbon_dioxide_saved"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_carbon_dioxide_background"
+                        app:layout_constraintStart_toStartOf="@+id/text_carbon_dioxide_saved"
+                        app:layout_constraintTop_toBottomOf="@+id/text_carbon_dioxide_saved"
+                        app:layout_constraintVertical_chainStyle="packed" />
 
-            <View
-                android:id="@+id/view_calorie_background"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="?attr/colorTertiary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@+id/view_calorie_background"
-                app:layout_constraintEnd_toEndOf="@+id/view_calorie_background"
-                app:layout_constraintStart_toStartOf="@+id/view_calorie_background"
-                app:layout_constraintTop_toTopOf="@+id/view_calorie_background"
-                app:srcCompat="@drawable/local_fire_department_fill0_wght400_grad0_opsz24"
-                app:tint="?attr/colorOnTertiary" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/text_calorie_burned"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/text_calorie_burned_label"
-                app:layout_constraintStart_toEndOf="@+id/view_calorie_background"
-                app:layout_constraintTop_toTopOf="@+id/view_calorie_background"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="210 kcal" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_calorie_burned_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/calorie_burned"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/view_calorie_background"
-                app:layout_constraintStart_toStartOf="@+id/text_calorie_burned"
-                app:layout_constraintTop_toBottomOf="@+id/text_calorie_burned"
-                app:layout_constraintVertical_chainStyle="packed" />
+    </androidx.core.widget.NestedScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardBackgroundColor="?attr/colorPrimaryContainer"
-        app:cardCornerRadius="24dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp">
-
-            <View
-                android:id="@+id/view_distance_background"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="?attr/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@+id/view_distance_background"
-                app:layout_constraintEnd_toEndOf="@+id/view_distance_background"
-                app:layout_constraintStart_toStartOf="@+id/view_distance_background"
-                app:layout_constraintTop_toTopOf="@+id/view_distance_background"
-                app:srcCompat="@drawable/conversion_path_fill0_wght400_grad0_opsz24"
-                app:tint="?attr/colorOnPrimary" />
-
-            <TextView
-                android:id="@+id/text_distance_travelled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/text_distance_travelled_label"
-                app:layout_constraintStart_toEndOf="@+id/view_distance_background"
-                app:layout_constraintTop_toTopOf="@+id/view_distance_background"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="4.1 km" />
-
-            <TextView
-                android:id="@+id/text_distance_travelled_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/distance_travelled"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/view_distance_background"
-                app:layout_constraintStart_toStartOf="@+id/text_distance_travelled"
-                app:layout_constraintTop_toBottomOf="@+id/text_distance_travelled"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:cardBackgroundColor="?attr/colorSecondaryContainer"
-        app:cardCornerRadius="24dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="18dp">
-
-            <View
-                android:id="@+id/view_carbon_dioxide_background"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/shape_circle"
-                android:backgroundTint="?attr/colorSecondary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintEnd_toEndOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintStart_toStartOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintTop_toTopOf="@+id/view_carbon_dioxide_background"
-                app:srcCompat="@drawable/bubble_chart_fill0_wght400_grad0_opsz24"
-                app:tint="?attr/colorOnSecondary" />
-
-            <TextView
-                android:id="@+id/text_carbon_dioxide_saved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="2dp"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/text_carbon_dioxide_saved_label"
-                app:layout_constraintStart_toEndOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintTop_toTopOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="1.43 kg" />
-
-            <TextView
-                android:id="@+id/text_carbon_dioxide_saved_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/carbon_dioxide_saved"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/view_carbon_dioxide_background"
-                app:layout_constraintStart_toStartOf="@+id/text_carbon_dioxide_saved"
-                app:layout_constraintTop_toBottomOf="@+id/text_carbon_dioxide_saved"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
