@@ -7,6 +7,6 @@ data class DailyStatsState(
     val stepsTaken: Int,
     val treeCollected: Boolean,
     val calorieBurned: Int,
-    val distanceTravelled: Float,
-    val carbonDioxideSaved: Float,
+    val distanceTravelled: Double,
+    val carbonDioxideSaved: Double,
 )

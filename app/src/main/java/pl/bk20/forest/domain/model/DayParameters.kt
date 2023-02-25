@@ -14,5 +14,5 @@ data class DayParameters(
 
     val stepLength: Int,
 
-    val pace: Float
+    val pace: Double
 )

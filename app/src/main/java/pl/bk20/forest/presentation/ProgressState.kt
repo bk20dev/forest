@@ -7,6 +7,6 @@ data class ProgressState(
     val stepsTaken: Int,
     val dailyGoal: Int,
     val calorieBurned: Int,
-    val distanceTravelled: Float,
-    val carbonDioxideSaved: Float,
+    val distanceTravelled: Double,
+    val carbonDioxideSaved: Double,
 )

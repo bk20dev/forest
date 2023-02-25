@@ -30,15 +30,15 @@ class SettingsStoreImpl(
                 stepLength = getNumericString("step_length", 0),
                 height = getNumericString("height", 0),
                 weight = getNumericString("weight", 0),
-                pace = getNumericString("pace", 0f)
+                pace = getNumericString("pace", 0.0)
             )
         }
 
     private fun SharedPreferences.getNumericString(key: String, defaultValue: Int): Int =
         getString(key, "")?.toIntOrNull() ?: defaultValue
 
-    private fun SharedPreferences.getNumericString(key: String, defaultValue: Float): Float =
-        getString(key, "")?.toFloatOrNull() ?: defaultValue
+    private fun SharedPreferences.getNumericString(key: String, defaultValue: Double): Double =
+        getString(key, "")?.toDoubleOrNull() ?: defaultValue
 
     override fun onSharedPreferenceChanged(
         updatedSharedPreferences: SharedPreferences?,

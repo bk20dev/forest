@@ -62,7 +62,7 @@ class StatsChartPageFragment : Fragment() {
         locale: Locale,
         activeDay: LocalDate
     ): List<ChartAdapter.ChartValue<LocalDate>> = map {
-        val value = it.steps / max.toFloat()
+        val value = it.steps / max.toDouble()
         val weekdayName = it.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale)
         val isSelected = it.date.isEqual(activeDay)
         val barColor =

@@ -25,8 +25,8 @@ class ProgressViewModel(
             stepsTaken = 0,
             dailyGoal = 0,
             calorieBurned = 0,
-            distanceTravelled = 0f,
-            carbonDioxideSaved = 0f,
+            distanceTravelled = 0.0,
+            carbonDioxideSaved = 0.0,
         )
     )
     val progress: StateFlow<ProgressState> = _progress.asStateFlow()

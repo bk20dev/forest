@@ -13,7 +13,7 @@ class StepCounterController(
     initialDate: LocalDate = LocalDate.now()
 ) {
 
-    private val _stats = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 0, 0f, 0))
+    private val _stats = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 0, 0.0, 0))
     val stats: StateFlow<StepCounterState> = _stats.asStateFlow()
 
     private var getStatsJob: Job? = null

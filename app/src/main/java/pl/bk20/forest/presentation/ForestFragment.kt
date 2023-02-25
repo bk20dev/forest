@@ -54,14 +54,14 @@ class ForestFragment : Fragment() {
         parentLayout.removeAllViews()
         val gapCount = treeCount + 1
         repeat(treeCount) {
-            val fixedPosition = (it + 1f) / gapCount
-            val randomOffset = (Random.nextFloat() - 0.5f) / 5
+            val fixedPosition = (it + 1.0) / gapCount
+            val randomOffset = (Random.nextDouble() - 0.5) / 5
             val horizontalPosition = fixedPosition + randomOffset
             createTree(parentLayout, horizontalPosition)
         }
     }
 
-    private fun createTree(parentLayout: ConstraintLayout, horizontalPosition: Float) {
+    private fun createTree(parentLayout: ConstraintLayout, horizontalPosition: Double) {
         val treeImageView = ImageView(context)
         treeImageView.setImageResource(R.drawable.tree_collected)
         parentLayout.addView(treeImageView)
@@ -69,7 +69,7 @@ class ForestFragment : Fragment() {
             startToStart = parentLayout.id
             endToEnd = parentLayout.id
             bottomToBottom = parentLayout.id
-            horizontalBias = horizontalPosition
+            horizontalBias = horizontalPosition.toFloat()
         }
     }
 }

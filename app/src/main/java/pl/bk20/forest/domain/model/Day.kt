@@ -19,7 +19,7 @@ data class Day(
 
     val stepLength: Int = 72,
 
-    val pace: Float = 1f
+    val pace: Double = 1.0
 ) {
 
     companion object
@@ -27,18 +27,18 @@ data class Day(
     val distanceTravelled
         get() = run {
             val distanceCentimeters = steps * stepLength
-            distanceCentimeters / 100_000f
+            distanceCentimeters.toDouble() / 100_000
         }
 
     val calorieBurned
         get() = run {
-            val modifier = height / 182f + weight / 70f - 1
-            0.04f * steps * pace * modifier
+            val modifier = height / 182.0 + weight / 70.0 - 1
+            0.04 * steps * pace * modifier
         }
 
     val carbonDioxideSaved
         get() = run {
-            steps / 1000f * 0.1925f
+            steps * 0.1925 / 1000.0
         }
 }
 

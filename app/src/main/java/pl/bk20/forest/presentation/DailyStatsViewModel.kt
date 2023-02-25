@@ -27,8 +27,8 @@ class DailyStatsViewModel(
             stepsTaken = 0,
             treeCollected = false,
             calorieBurned = 0,
-            distanceTravelled = 0f,
-            carbonDioxideSaved = 0f,
+            distanceTravelled = 0.0,
+            carbonDioxideSaved = 0.0,
         )
     )
 

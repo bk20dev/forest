@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.AttrRes
-import androidx.annotation.FloatRange
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -42,7 +41,7 @@ class ChartAdapter<T>(
                 val color = context.getThemeColor(chartValue.barColor)
                 backgroundTintList = ColorStateList.valueOf(color)
                 val params = layoutParams as ConstraintLayout.LayoutParams
-                params.matchConstraintPercentHeight = chartValue.value
+                params.matchConstraintPercentHeight = chartValue.value.toFloat()
                 requestLayout()
             }
         }
@@ -63,8 +62,7 @@ class ChartAdapter<T>(
 
         val id: T,
 
-        @FloatRange(from = 0.0, to = 1.0)
-        val value: Float,
+        val value: Double,
 
         val label: String,
 

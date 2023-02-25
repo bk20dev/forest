@@ -13,9 +13,9 @@ data class StatsSummary(
 fun StatsSummary.Companion.of(days: List<Day>): StatsSummary {
     val treesCollected = days.count { it.steps >= it.goal }
     val stepsTaken = days.sumOf { it.steps.toLong() }
-    val calorieBurned = days.sumOf { it.calorieBurned.toDouble() }
-    val distanceTravelled = days.sumOf { it.distanceTravelled.toDouble() }
-    val carbonDioxideSaved = days.sumOf { it.carbonDioxideSaved.toDouble() }
+    val calorieBurned = days.sumOf { it.calorieBurned }
+    val distanceTravelled = days.sumOf { it.distanceTravelled }
+    val carbonDioxideSaved = days.sumOf { it.carbonDioxideSaved }
     return StatsSummary(
         treesCollected = treesCollected,
         stepsTaken = stepsTaken,

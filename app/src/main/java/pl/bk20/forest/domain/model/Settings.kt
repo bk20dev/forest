@@ -5,5 +5,5 @@ data class Settings(
     val stepLength: Int,
     val height: Int,
     val weight: Int,
-    val pace: Float
+    val pace: Double
 )
