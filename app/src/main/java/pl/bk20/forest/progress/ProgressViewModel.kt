@@ -9,13 +9,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.progress.domain.usecase.ProgressUseCases
+import pl.bk20.forest.core.domain.usecase.DayUseCases
 import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class ProgressViewModel(
-    private val progressUseCases: ProgressUseCases,
+    private val dayUseCases: DayUseCases,
     initialDate: LocalDate = LocalDate.now()
 ) : ViewModel() {
 
@@ -40,7 +40,7 @@ class ProgressViewModel(
     private fun getProgress(date: LocalDate) {
         getProgressJob?.cancel()
 
-        getProgressJob = progressUseCases.getDay(date).onEach { day ->
+        getProgressJob = dayUseCases.getDay(date).onEach { day ->
             _progress.value = progress.value.copy(
                 date = day.date,
                 stepsTaken = day.steps,
@@ -62,9 +62,9 @@ class ProgressViewModel(
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val dayDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
-            val progressUseCases = ProgressUseCases(dayRepository, settingsRepository)
+            val dayUseCases = DayUseCases(dayRepository, settingsRepository)
 
-            return ProgressViewModel(progressUseCases) as T
+            return ProgressViewModel(dayUseCases) as T
         }
     }
 }
