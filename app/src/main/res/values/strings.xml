@@ -8,10 +8,6 @@
     <string name="step_counter_stats">%1$d kcal · %2$.2f km · %3$d%% of your daily goal</string>
     <string name="steps">steps</string>
     <string name="step_goal">Goal %s</string>
-    <string name="steps_left">%s left</string>
-    <string name="steps_beyond_goal">%s beyond goal</string>
-    <string name="kilometers_abbr">km</string>
-    <string name="calorie_abbr">kcal</string>
 
     <!-- Onboarding -->
     <string name="action_continue">Continue</string>
