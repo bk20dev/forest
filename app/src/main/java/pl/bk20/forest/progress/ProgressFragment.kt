@@ -1,4 +1,4 @@
-package pl.bk20.forest.presentation
+package pl.bk20.forest.progress
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import java.text.DecimalFormat
 
 class ProgressFragment : Fragment() {
 
-    private val viewModel: ProgressViewModel by activityViewModels { ProgressViewModel.Factory }
+    private val viewModel: ProgressViewModel by activityViewModels { ProgressViewModel }
 
     private var _binding: FragmentProgressBinding? = null
     private val binding get() = _binding!!

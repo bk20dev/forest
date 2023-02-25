@@ -1,4 +1,4 @@
-package pl.bk20.forest.presentation
+package pl.bk20.forest.progress
 
 import java.time.LocalDate
 

@@ -1,4 +1,4 @@
-package pl.bk20.forest.presentation
+package pl.bk20.forest.progress
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.data.repository.DayRepositoryImpl
 import pl.bk20.forest.data.repository.SettingsRepositoryImpl
-import pl.bk20.forest.domain.usecase.DayUseCases
+import pl.bk20.forest.progress.domain.usecase.ProgressUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class ProgressViewModel(
-    private val dayUseCases: DayUseCases,
+    private val progressUseCases: ProgressUseCases,
     initialDate: LocalDate = LocalDate.now()
 ) : ViewModel() {
 
@@ -40,7 +40,7 @@ class ProgressViewModel(
     private fun getProgress(date: LocalDate) {
         getProgressJob?.cancel()
 
-        getProgressJob = dayUseCases.getDay(date).onEach { day ->
+        getProgressJob = progressUseCases.getDay(date).onEach { day ->
             _progress.value = progress.value.copy(
                 date = day.date,
                 stepsTaken = day.steps,
@@ -62,9 +62,9 @@ class ProgressViewModel(
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val dayDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
-            val dayUseCases = DayUseCases(dayRepository, settingsRepository)
+            val progressUseCases = ProgressUseCases(dayRepository, settingsRepository)
 
-            return ProgressViewModel(dayUseCases) as T
+            return ProgressViewModel(progressUseCases) as T
         }
     }
 }
