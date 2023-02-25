@@ -2,10 +2,10 @@ package pl.bk20.forest.progress.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import pl.bk20.forest.domain.model.Day
-import pl.bk20.forest.domain.model.of
-import pl.bk20.forest.domain.repository.DayRepository
-import pl.bk20.forest.domain.repository.SettingsRepository
+import pl.bk20.forest.core.domain.model.Day
+import pl.bk20.forest.core.domain.model.of
+import pl.bk20.forest.core.domain.repository.DayRepository
+import pl.bk20.forest.core.domain.repository.SettingsRepository
 import java.time.LocalDate
 
 interface GetDay {

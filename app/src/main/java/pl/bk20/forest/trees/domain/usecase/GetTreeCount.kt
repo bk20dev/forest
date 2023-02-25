@@ -1,7 +1,7 @@
 package pl.bk20.forest.trees.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import pl.bk20.forest.domain.repository.DayRepository
+import pl.bk20.forest.core.domain.repository.DayRepository
 
 interface GetTreeCount {
     operator fun invoke(): Flow<Int>

@@ -8,8 +8,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
-import pl.bk20.forest.data.repository.DayRepositoryImpl
-import pl.bk20.forest.data.repository.SettingsRepositoryImpl
+import pl.bk20.forest.core.data.repository.DayRepositoryImpl
+import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.progress.domain.usecase.ProgressUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt

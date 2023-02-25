@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".presentation.ActivityRecognitionPermissionFragment">
+    tools:context=".core.presentation.ActivityRecognitionPermissionFragment">
 
     <ImageView
         android:id="@+id/image_walk"

@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.google.android.material.color.DynamicColors
-import pl.bk20.forest.data.source.ForestDatabase
-import pl.bk20.forest.data.source.SettingsStore
-import pl.bk20.forest.data.source.SettingsStoreImpl
+import pl.bk20.forest.core.data.source.ForestDatabase
+import pl.bk20.forest.core.data.source.SettingsStore
+import pl.bk20.forest.core.data.source.SettingsStoreImpl
 
 class ForestApplication : Application() {
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".presentation.DailyStatsFragment">
+    tools:context=".core.presentation.DailyStatsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_chart"
-            android:name="pl.bk20.forest.presentation.StatsChartFragment"
+            android:name="pl.bk20.forest.core.presentation.StatsChartFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_stats_chart" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/activityRecognitionPermissionFragment"
-        android:name="pl.bk20.forest.presentation.ActivityRecognitionPermissionFragment"
+        android:name="pl.bk20.forest.core.presentation.ActivityRecognitionPermissionFragment"
         android:label="fragment_activity_recognition_permission"
         tools:layout="@layout/fragment_activity_recognition_permission">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="pl.bk20.forest.presentation.MainActivity"
+        android:name="pl.bk20.forest.core.presentation.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 </navigation>

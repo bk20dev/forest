@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
-import pl.bk20.forest.data.repository.DayRepositoryImpl
+import pl.bk20.forest.core.data.repository.DayRepositoryImpl
 import pl.bk20.forest.trees.domain.usecase.ForestUseCases
 
 class ForestViewModel(
