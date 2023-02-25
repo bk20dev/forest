@@ -3,7 +3,7 @@ package pl.bk20.forest.core.data.repository
 import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.core.data.source.DayDao
 import pl.bk20.forest.core.domain.model.Day
-import pl.bk20.forest.core.domain.model.DayParameters
+import pl.bk20.forest.core.domain.model.DaySettings
 import pl.bk20.forest.core.domain.repository.DayRepository
 import java.time.LocalDate
 
@@ -35,7 +35,7 @@ class DayRepositoryImpl(
         dao.upsertDay(day)
     }
 
-    override suspend fun updateParameters(dayParameters: DayParameters) {
-        dao.updateParameters(dayParameters)
+    override suspend fun updateDaySettings(daySettings: DaySettings) {
+        dao.updateDaySettings(daySettings)
     }
 }

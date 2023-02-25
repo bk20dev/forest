@@ -11,14 +11,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.domain.model.DayParameters
-import pl.bk20.forest.core.domain.usecase.DayUseCases
+import pl.bk20.forest.core.domain.model.DaySettings
 import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.settings.domain.usecase.SettingsUseCases
 import java.time.LocalDate
 
 class SettingsViewModel(
-    private val dayUseCases: DayUseCases,
     private val settingsUseCases: SettingsUseCases
 ) : ViewModel() {
 
@@ -27,8 +25,8 @@ class SettingsViewModel(
     fun observeSettingsChanges() {
         observeSettingsChangesJob?.cancel()
         observeSettingsChangesJob = settingsUseCases.getSettings().onEach {
-            dayUseCases.updateDayParameters(
-                DayParameters(
+            settingsUseCases.updateDaySettings(
+                DaySettings(
                     date = LocalDate.now(),
                     goal = it.dailyGoal,
                     height = it.height,
@@ -49,13 +47,12 @@ class SettingsViewModel(
 
             val settingsStore = application.settingsStore
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
-            val settingsUseCases = SettingsUseCases(settingsRepository)
-
             val dayDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
-            val dayUseCases = DayUseCases(dayRepository, settingsRepository)
 
-            return SettingsViewModel(dayUseCases, settingsUseCases) as T
+            val settingsUseCases = SettingsUseCases(settingsRepository, dayRepository)
+
+            return SettingsViewModel(settingsUseCases) as T
         }
     }
 }

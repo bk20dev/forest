@@ -2,7 +2,7 @@ package pl.bk20.forest.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.core.domain.model.Day
-import pl.bk20.forest.core.domain.model.DayParameters
+import pl.bk20.forest.core.domain.model.DaySettings
 import java.time.LocalDate
 
 interface DayRepository {
@@ -19,5 +19,5 @@ interface DayRepository {
 
     suspend fun upsertDay(day: Day)
 
-    suspend fun updateParameters(dayParameters: DayParameters)
+    suspend fun updateDaySettings(daySettings: DaySettings)
 }

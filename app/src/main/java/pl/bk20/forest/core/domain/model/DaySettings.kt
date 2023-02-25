@@ -2,7 +2,7 @@ package pl.bk20.forest.core.domain.model
 
 import java.time.LocalDate
 
-data class DayParameters(
+data class DaySettings(
 
     val date: LocalDate,
 
