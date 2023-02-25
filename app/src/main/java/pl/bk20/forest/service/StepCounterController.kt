@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.service
+package pl.bk20.forest.service
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

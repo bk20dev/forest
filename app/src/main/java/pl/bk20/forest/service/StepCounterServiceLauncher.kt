@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.service
+package pl.bk20.forest.service
 
 import android.Manifest
 import android.content.BroadcastReceiver

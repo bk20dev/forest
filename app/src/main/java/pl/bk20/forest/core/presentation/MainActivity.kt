@@ -13,8 +13,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import pl.bk20.forest.R
-import pl.bk20.forest.core.service.StepCounterService
 import pl.bk20.forest.databinding.ActivityMainBinding
+import pl.bk20.forest.service.StepCounterService
 import pl.bk20.forest.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
