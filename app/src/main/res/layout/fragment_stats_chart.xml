@@ -18,16 +18,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="24dp"
+        android:minHeight="48dp">
 
         <ImageButton
             android:id="@+id/button_previous_day"
-            style="@style/Widget.Material3.Button"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@null"
+            android:clickable="true"
             android:contentDescription="@string/previous_day"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
+            android:focusable="true"
             android:src="@drawable/chevron_left_fill0_wght400_grad0_opsz24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,12 +49,12 @@
 
         <ImageButton
             android:id="@+id/button_next_day"
-            style="@style/Widget.Material3.Button"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@null"
+            android:clickable="true"
             android:contentDescription="@string/next_day"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
+            android:focusable="true"
             android:src="@drawable/chevron_right_fill0_wght400_grad0_opsz24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
