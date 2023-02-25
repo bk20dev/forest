@@ -55,6 +55,8 @@
         <item quantity="other">%d trees</item>
     </plurals>
     <string name="daily_goal_reached">Daily goal reached</string>
+    <string name="details">Details</string>
+    <string name="summary">Summary</string>
 
     <!-- Preferences -->
     <string name="settings">Settings</string>
