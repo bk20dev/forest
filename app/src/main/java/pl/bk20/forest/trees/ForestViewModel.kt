@@ -1,4 +1,4 @@
-package pl.bk20.forest.presentation
+package pl.bk20.forest.trees
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.data.repository.DayRepositoryImpl
-import pl.bk20.forest.domain.usecase.ForestUseCases
+import pl.bk20.forest.trees.domain.usecase.ForestUseCases
 
 class ForestViewModel(
     forestUseCases: ForestUseCases

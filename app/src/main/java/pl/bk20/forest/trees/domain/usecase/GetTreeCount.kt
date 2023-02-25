@@ -1,4 +1,4 @@
-package pl.bk20.forest.domain.usecase
+package pl.bk20.forest.trees.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import pl.bk20.forest.domain.repository.DayRepository
