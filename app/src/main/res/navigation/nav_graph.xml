@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/statsFragment">
+    app:startDestination="@id/progressFragment">
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="pl.bk20.forest.core.presentation.SettingsFragment"
+        android:name="pl.bk20.forest.settings.SettingsFragment"
         android:label="@string/settings" />
 
     <fragment

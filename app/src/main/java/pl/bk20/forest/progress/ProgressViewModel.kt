@@ -9,8 +9,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.progress.domain.usecase.ProgressUseCases
+import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
 import java.time.LocalDate
 import kotlin.math.roundToInt
 

@@ -1,11 +1,11 @@
-package pl.bk20.forest.core.data.source
+package pl.bk20.forest.settings.data.source
 
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import pl.bk20.forest.core.domain.model.Settings
+import pl.bk20.forest.settings.domain.model.Settings
 
 class SettingsStoreImpl(
     private val sharedPreferences: SharedPreferences

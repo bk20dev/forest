@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.settings
 
 import android.os.Bundle
 import android.text.InputType

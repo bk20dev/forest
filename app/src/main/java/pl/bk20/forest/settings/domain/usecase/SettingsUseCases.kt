@@ -1,6 +1,6 @@
-package pl.bk20.forest.core.domain.usecase
+package pl.bk20.forest.settings.domain.usecase
 
-import pl.bk20.forest.core.domain.repository.SettingsRepository
+import pl.bk20.forest.settings.domain.repository.SettingsRepository
 
 class SettingsUseCases(
     repository: SettingsRepository

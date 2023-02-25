@@ -50,7 +50,7 @@
             android:exported="true"
             android:launchMode="singleInstance" />
         <activity
-            android:name=".core.presentation.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:parentActivityName=".core.presentation.MainActivity" />

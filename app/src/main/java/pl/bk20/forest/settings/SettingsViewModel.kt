@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.settings
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.core.domain.model.DayParameters
 import pl.bk20.forest.core.domain.usecase.DayUseCases
-import pl.bk20.forest.core.domain.usecase.SettingsUseCases
+import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
+import pl.bk20.forest.settings.domain.usecase.SettingsUseCases
 import java.time.LocalDate
 
 class SettingsViewModel(

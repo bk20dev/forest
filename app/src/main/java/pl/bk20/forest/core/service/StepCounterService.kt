@@ -22,9 +22,9 @@ import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.R
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.core.domain.usecase.DayUseCases
 import pl.bk20.forest.core.presentation.MainActivity
+import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
 import java.time.LocalDate
 
 class StepCounterService : LifecycleService(), SensorEventListener {

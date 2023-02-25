@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.combine
 import pl.bk20.forest.core.domain.model.Day
 import pl.bk20.forest.core.domain.model.of
 import pl.bk20.forest.core.domain.repository.DayRepository
-import pl.bk20.forest.core.domain.repository.SettingsRepository
+import pl.bk20.forest.settings.domain.repository.SettingsRepository
 import java.time.LocalDate
 
 interface GetDay {

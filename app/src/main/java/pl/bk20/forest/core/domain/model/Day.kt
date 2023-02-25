@@ -2,6 +2,7 @@ package pl.bk20.forest.core.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import pl.bk20.forest.settings.domain.model.Settings
 import java.time.LocalDate
 
 @Entity(tableName = "day")

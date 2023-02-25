@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.domain.model
+package pl.bk20.forest.settings.domain.model
 
 data class Settings(
     val dailyGoal: Int,

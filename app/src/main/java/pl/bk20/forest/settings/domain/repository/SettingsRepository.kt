@@ -1,7 +1,7 @@
-package pl.bk20.forest.core.domain.repository
+package pl.bk20.forest.settings.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import pl.bk20.forest.core.domain.model.Settings
+import pl.bk20.forest.settings.domain.model.Settings
 
 interface SettingsRepository {
 

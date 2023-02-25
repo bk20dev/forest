@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.core.domain.usecase.DayUseCases
+import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.stats.domain.usecase.StatsDetailsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
