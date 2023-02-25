@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="locale"
-    tools:context=".core.presentation.StatsChartPageFragment"
+    tools:context=".stats.presentation.StatsChartPageFragment"
     tools:layout_height="200dp">
 
     <androidx.recyclerview.widget.RecyclerView

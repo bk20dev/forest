@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.*
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
 import pl.bk20.forest.core.domain.model.Day
-import pl.bk20.forest.core.domain.usecase.StatsUseCases
-import pl.bk20.forest.core.util.iterator
+import pl.bk20.forest.stats.domain.usecase.StatsDetailsUseCases
+import pl.bk20.forest.stats.util.iterator
 import java.time.LocalDate
 
 class StatsChartViewModel(
-    private val statsUseCases: StatsUseCases
+    private val statsDetailsUseCases: StatsDetailsUseCases
 ) : ViewModel() {
 
     private val _week = MutableStateFlow<List<Day>>(emptyList())
@@ -25,7 +25,7 @@ class StatsChartViewModel(
 
     fun selectWeek(firstDay: LocalDate) {
         getWeekJob?.cancel()
-        getWeekJob = statsUseCases.getWeek(firstDay).onEach {
+        getWeekJob = statsDetailsUseCases.getWeek(firstDay).onEach {
             _week.value = alignWeek(it, firstDay)
         }.launchIn(viewModelScope)
     }
@@ -53,9 +53,9 @@ class StatsChartViewModel(
 
             val forestDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(forestDatabase.dayDao)
-            val statsUseCases = StatsUseCases(dayRepository)
+            val statsDetailsUseCases = StatsDetailsUseCases(dayRepository)
 
-            return StatsChartViewModel(statsUseCases) as T
+            return StatsChartViewModel(statsDetailsUseCases) as T
         }
     }
 }

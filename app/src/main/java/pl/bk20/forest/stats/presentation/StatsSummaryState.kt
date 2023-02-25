@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats.presentation
 
 data class StatsSummaryState(
     val isRefreshing: Boolean = false,

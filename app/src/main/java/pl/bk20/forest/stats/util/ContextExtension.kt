@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.util
+package pl.bk20.forest.stats.util
 
 import android.content.Context
 import android.util.TypedValue

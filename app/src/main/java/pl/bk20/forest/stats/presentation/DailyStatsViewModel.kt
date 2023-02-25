@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +12,13 @@ import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
 import pl.bk20.forest.core.data.repository.SettingsRepositoryImpl
 import pl.bk20.forest.core.domain.usecase.DayUseCases
-import pl.bk20.forest.core.domain.usecase.StatsUseCases
+import pl.bk20.forest.stats.domain.usecase.StatsDetailsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class DailyStatsViewModel(
     private val dayUseCases: DayUseCases,
-    private val statsUseCases: StatsUseCases
+    private val statsDetailsUseCases: StatsDetailsUseCases
 ) : ViewModel() {
 
     private val _day = MutableStateFlow(
@@ -42,9 +42,8 @@ class DailyStatsViewModel(
     init {
         selectDay(LocalDate.now())
         viewModelScope.launch {
-            statsUseCases.getFirstDayDate().collect {
-                val firstDate = it ?: LocalDate.now()
-                _dateRange.value = firstDate..LocalDate.now()
+            statsDetailsUseCases.getFirstDate().collect {
+                _dateRange.value = it..LocalDate.now()
             }
         }
     }
@@ -74,9 +73,9 @@ class DailyStatsViewModel(
             val settingsStore = application.settingsStore
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val dayUseCases = DayUseCases(dayRepository, settingsRepository)
-            val statsUseCases = StatsUseCases(dayRepository)
+            val statsDetailsUseCases = StatsDetailsUseCases(dayRepository)
 
-            return DailyStatsViewModel(dayUseCases, statsUseCases) as T
+            return DailyStatsViewModel(dayUseCases, statsDetailsUseCases) as T
         }
     }
 }

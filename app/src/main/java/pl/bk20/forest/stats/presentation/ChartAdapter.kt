@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats.presentation
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import pl.bk20.forest.core.util.getThemeColor
 import pl.bk20.forest.databinding.ItemChartBarBinding
+import pl.bk20.forest.stats.util.getThemeColor
 
 class ChartAdapter<T>(
     private val listener: OnValueSelected<T>

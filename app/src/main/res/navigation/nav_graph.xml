@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/statsFragment"
-        android:name="pl.bk20.forest.core.presentation.StatsFragment"
+        android:name="pl.bk20.forest.stats.StatsFragment"
         android:label="@string/stats"
         tools:layout="@layout/fragment_stats" />
 

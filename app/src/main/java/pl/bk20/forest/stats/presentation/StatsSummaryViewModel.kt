@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.domain.usecase.StatsSummaryUseCases
+import pl.bk20.forest.stats.domain.usecase.StatsSummaryUseCases
 
 class StatsSummaryViewModel(
     private val statsSummaryUseCases: StatsSummaryUseCases

@@ -5,7 +5,7 @@
     android:id="@+id/swipe_refresh_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".core.presentation.StatsSummaryFragment">
+    tools:context=".stats.presentation.StatsSummaryFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

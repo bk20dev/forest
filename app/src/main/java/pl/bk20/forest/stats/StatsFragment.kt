@@ -1,4 +1,4 @@
-package pl.bk20.forest.core.presentation
+package pl.bk20.forest.stats
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import pl.bk20.forest.R
 import pl.bk20.forest.databinding.FragmentStatsBinding
+import pl.bk20.forest.stats.presentation.DailyStatsFragment
+import pl.bk20.forest.stats.presentation.StatsSummaryFragment
 
 class StatsFragment : Fragment() {
 
