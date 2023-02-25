@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:padding="24dp"
-    tools:context=".stats.presentation.DailyStatsFragment">
+    tools:context=".stats.presentation.StatsDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

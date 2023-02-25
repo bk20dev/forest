@@ -17,34 +17,9 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 
-class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-
-    var dateRange = LocalDate.now()..LocalDate.now()
-
-    fun getPageContaining(selectedDate: LocalDate): Int {
-        val period = Period.between(selectedDate, dateRange.endInclusive)
-        return (period.days / 7).coerceIn(0, itemCount)
-    }
-
-    override fun getItemCount(): Int = dateRange.run {
-        val period = Period.between(start, endInclusive)
-        return period.days / 7 + 1
-    }
-
-    override fun createFragment(position: Int): Fragment {
-        val fragment = StatsChartPageFragment()
-        fragment.arguments = Bundle().apply {
-            val daysToSubtract = position * 7 + 6
-            val date = dateRange.endInclusive.minusDays(daysToSubtract.toLong())
-            putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date)
-        }
-        return fragment
-    }
-}
-
 class StatsChartFragment : Fragment() {
 
-    private val dailyStatsViewModel: DailyStatsViewModel by activityViewModels { DailyStatsViewModel }
+    private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel }
 
     private lateinit var binding: FragmentStatsChartBinding
     private lateinit var chartPageAdapter: ChartPageAdapter
@@ -69,7 +44,7 @@ class StatsChartFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                with(dailyStatsViewModel) {
+                with(statsDetailsViewModel) {
                     launch { day.collect { updateUserInterface(it.date, dateRange.value) } }
                     launch { dateRange.collect { updateUserInterface(day.value.date, it) } }
                 }
@@ -78,8 +53,8 @@ class StatsChartFragment : Fragment() {
     }
 
     private fun changeSelectedDate(offset: Long) {
-        val currentDate = dailyStatsViewModel.day.value.date
-        dailyStatsViewModel.selectDay(currentDate.plusDays(offset))
+        val currentDate = statsDetailsViewModel.day.value.date
+        statsDetailsViewModel.selectDay(currentDate.plusDays(offset))
     }
 
     private fun updateUserInterface(selectedDate: LocalDate, dateRange: ClosedRange<LocalDate>) {
@@ -97,5 +72,30 @@ class StatsChartFragment : Fragment() {
     ) {
         val pageIndex = chartPageAdapter.getPageContaining(selectedDate)
         binding.viewPagerChart.currentItem = pageIndex
+    }
+
+    class ChartPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+        var dateRange = LocalDate.now()..LocalDate.now()
+
+        fun getPageContaining(selectedDate: LocalDate): Int {
+            val period = Period.between(selectedDate, dateRange.endInclusive)
+            return (period.days / 7).coerceIn(0, itemCount)
+        }
+
+        override fun getItemCount(): Int = dateRange.run {
+            val period = Period.between(start, endInclusive)
+            return period.days / 7 + 1
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            val fragment = StatsChartPageFragment()
+            fragment.arguments = Bundle().apply {
+                val daysToSubtract = position * 7 + 6
+                val date = dateRange.endInclusive.minusDays(daysToSubtract.toLong())
+                putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date)
+            }
+            return fragment
+        }
     }
 }

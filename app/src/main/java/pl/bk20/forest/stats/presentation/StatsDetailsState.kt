@@ -2,7 +2,7 @@ package pl.bk20.forest.stats.presentation
 
 import java.time.LocalDate
 
-data class DailyStatsState(
+data class StatsDetailsState(
     val date: LocalDate,
     val stepsTaken: Int,
     val treeCollected: Boolean,

@@ -9,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import pl.bk20.forest.R
 import pl.bk20.forest.databinding.FragmentStatsBinding
-import pl.bk20.forest.stats.presentation.DailyStatsFragment
+import pl.bk20.forest.stats.presentation.StatsDetailsFragment
 import pl.bk20.forest.stats.presentation.StatsSummaryFragment
 
 class StatsFragment : Fragment() {
@@ -19,7 +19,7 @@ class StatsFragment : Fragment() {
     companion object {
 
         private val fragments = listOf(
-            R.string.details to { DailyStatsFragment() },
+            R.string.details to { StatsDetailsFragment() },
             R.string.summary to { StatsSummaryFragment() },
         )
     }
