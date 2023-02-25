@@ -10,19 +10,17 @@ import com.google.android.material.tabs.TabLayoutMediator
 import pl.bk20.forest.R
 import pl.bk20.forest.databinding.FragmentStatsBinding
 
-class StatsPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-
-    override fun getItemCount(): Int = 2
-
-    override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> DailyStatsFragment()
-        else -> StatsSummaryFragment()
-    }
-}
-
 class StatsFragment : Fragment() {
 
     private lateinit var binding: FragmentStatsBinding
+
+    companion object {
+
+        private val fragments = listOf(
+            R.string.details to { DailyStatsFragment() },
+            R.string.summary to { StatsSummaryFragment() },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +38,17 @@ class StatsFragment : Fragment() {
             adapter = statsPageAdapter
         }
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            val tabTitleRes = when (position) {
-                0 -> R.string.details
-                else -> R.string.summary
-            }
+            val tabTitleRes = fragments[position].first
             tab.text = getString(tabTitleRes)
         }.attach()
+    }
+
+    class StatsPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+        override fun getItemCount(): Int = fragments.size
+
+        override fun createFragment(position: Int): Fragment {
+            return fragments[position].second()
+        }
     }
 }
