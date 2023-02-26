@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import pl.bk20.forest.core.domain.model.Day
 import pl.bk20.forest.databinding.FragmentStatsPageChartBinding
+import java.lang.Integer.max
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
@@ -43,13 +44,14 @@ class StatsChartPageFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                val weekFlow = viewModel.week
+                val datasetFlow = viewModel.dataset
                 val dayFlow = statsDetailsViewModel.day
 
-                weekFlow.combine(dayFlow) { week, day ->
-                    val highestStepsValue = week.maxOfOrNull { it.steps } ?: 1
+                datasetFlow.combine(dayFlow) { dataset, day ->
+                    val selectedWeek = dataset.week
+                    val highestChartValue = selectedWeek.maxOfOrNull { max(it.steps, it.goal) } ?: 1
                     val locale = resources.configuration.locales[0]
-                    week.toChartValues(highestStepsValue, locale, day.date)
+                    selectedWeek.toChartValues(highestChartValue, locale, day.date)
                 }.collect {
                     chartAdapter.submitList(it)
                 }

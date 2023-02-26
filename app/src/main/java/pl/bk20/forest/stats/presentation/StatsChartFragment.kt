@@ -19,7 +19,8 @@ import java.time.format.DateTimeFormatter
 
 class StatsChartFragment : Fragment() {
 
-    private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel }
+    private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel.Factory }
+    private val statsChartViewModel: StatsChartViewModel by activityViewModels { StatsChartViewModel.Factory }
 
     private lateinit var binding: FragmentStatsChartBinding
     private lateinit var chartPageAdapter: ChartPageAdapter
@@ -44,9 +45,14 @@ class StatsChartFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                with(statsDetailsViewModel) {
-                    launch { day.collect { updateUserInterface(it.date, dateRange.value) } }
-                    launch { dateRange.collect { updateUserInterface(day.value.date, it) } }
+                val selectedDate = statsDetailsViewModel.day
+                val dateRange = statsChartViewModel.dataset
+
+                launch {
+                    selectedDate.collect { updateUserInterface(it.date, dateRange.value.dateRange) }
+                }
+                launch {
+                    dateRange.collect { updateUserInterface(selectedDate.value.date, it.dateRange) }
                 }
             }
         }

@@ -7,42 +7,41 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
-import pl.bk20.forest.core.domain.model.Day
-import pl.bk20.forest.stats.domain.usecase.StatsDetailsUseCases
-import pl.bk20.forest.stats.util.iterator
+import pl.bk20.forest.stats.domain.usecase.StatsChartUseCases
+import pl.bk20.forest.stats.util.alignWeek
 import java.time.LocalDate
 
 class StatsChartViewModel(
-    private val statsDetailsUseCases: StatsDetailsUseCases
+    private val statsChartUseCases: StatsChartUseCases,
+    currentDateFlow: StateFlow<LocalDate>
 ) : ViewModel() {
 
-    private val _week = MutableStateFlow<List<Day>>(emptyList())
-    val week: StateFlow<List<Day>> = _week.asStateFlow()
+    private val _dataset = MutableStateFlow(StatsChartState.of(currentDateFlow.value))
+    val dataset: StateFlow<StatsChartState> = _dataset.asStateFlow()
 
-    private var getWeekJob: Job? = null
-
-    fun selectWeek(firstDay: LocalDate) {
-        getWeekJob?.cancel()
-        getWeekJob = statsDetailsUseCases.getWeek(firstDay).onEach {
-            _week.value = alignWeek(it, firstDay)
-        }.launchIn(viewModelScope)
+    init {
+        val firstDateFlow = statsChartUseCases.getFirstDate()
+        firstDateFlow
+            .combine(currentDateFlow) { firstDate, currentDate -> firstDate..currentDate }
+            .onEach { dateRange ->
+                _dataset.value = dataset.value.copy(dateRange = dateRange)
+            }
+            .launchIn(viewModelScope)
     }
 
-    private fun alignWeek(
-        week: List<Day>,
-        firstDay: LocalDate,
-        lastDay: LocalDate = firstDay.plusDays(6)
-    ): List<Day> {
-        val result = week.toMutableList()
-        for (date in firstDay..lastDay) {
-            val shouldAddDay = result.none { it.date == date }
-            if (shouldAddDay) {
-                result.add(Day(date, goal = 0))
+    private var getDatasetJob: Job? = null
+
+    fun selectWeek(firstDay: LocalDate) {
+        getDatasetJob?.cancel()
+        getDatasetJob = viewModelScope.launch {
+            statsChartUseCases.getWeek(firstDay).collect { week ->
+                val alignedWeek = week.alignWeek(firstDay)
+                _dataset.value = dataset.value.copy(week = alignedWeek)
             }
         }
-        return result.sortedBy { it.date }
     }
 
     companion object Factory : ViewModelProvider.Factory {
@@ -53,9 +52,9 @@ class StatsChartViewModel(
 
             val forestDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(forestDatabase.dayDao)
-            val statsDetailsUseCases = StatsDetailsUseCases(dayRepository)
+            val statsChartUseCases = StatsChartUseCases(dayRepository)
 
-            return StatsChartViewModel(statsDetailsUseCases) as T
+            return StatsChartViewModel(statsChartUseCases, application.currentDate) as T
         }
     }
 }
