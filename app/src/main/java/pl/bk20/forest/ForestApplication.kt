@@ -1,7 +1,10 @@
 package pl.bk20.forest
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.google.android.material.color.DynamicColors
@@ -20,9 +23,10 @@ class ForestApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DynamicColors.applyToActivitiesIfAvailable(this)
 
+        DynamicColors.applyToActivitiesIfAvailable(this)
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+        registerMidnightTimer()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         settingsStore = SettingsStoreImpl(sharedPreferences)
@@ -32,9 +36,24 @@ class ForestApplication : Application() {
             ForestDatabase::class.java,
             ForestDatabase.DATABASE_NAME
         ).build()
+    }
 
-        val midnightBroadcastReceiverIntent =
-            Intent(applicationContext, MidnightBroadcastReceiver::class.java)
-        sendBroadcast(midnightBroadcastReceiverIntent)
+    private fun registerMidnightTimer() {
+        val intentFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_TIME_TICK)
+            addAction(Intent.ACTION_TIME_CHANGED)
+            addAction(Intent.ACTION_TIMEZONE_CHANGED)
+        }
+        registerReceiver(midnightBroadcastReceiver, intentFilter)
+    }
+
+    private val midnightBroadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val today = LocalDate.now()
+            if (today != currentDate.value) {
+                currentDate.value = today
+            }
+        }
     }
 }
