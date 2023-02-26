@@ -1,9 +1,13 @@
 package pl.bk20.forest.core.presentation
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -45,8 +49,24 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigation.setupWithNavController(navController)
 
-        // TODO: Ask for permissions or something
         startStepCounterService()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            askForNotificationPermission()
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun askForNotificationPermission() {
+        val notificationPermission = android.Manifest.permission.POST_NOTIFICATIONS
+        val notificationPermissionStatus = ContextCompat
+            .checkSelfPermission(this, notificationPermission)
+        if (notificationPermissionStatus == PackageManager.PERMISSION_DENIED) {
+            requestPermissionLauncher.launch(notificationPermission)
+        }
     }
 
     private fun startStepCounterService() {

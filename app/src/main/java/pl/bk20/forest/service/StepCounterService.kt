@@ -38,11 +38,6 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         private const val PENDING_INTENT_ID = 0x1
     }
 
-//    private val midnightTimer = MidnightTimer(TimerImpl()) {
-//        val today = LocalDate.now()
-//        controller.updateActiveDate(today)
-//    }
-
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
@@ -66,8 +61,6 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         // Create notification
         val notification = createNotification(controller.stats.value)
         startForeground(NOTIFICATION_ID, notification)
-
-//        midnightTimer.start()
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         lifecycleScope.launch {
@@ -124,7 +117,6 @@ class StepCounterService : LifecycleService(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
-//        midnightTimer.stop()
         sensorManager.unregisterListener(this)
     }
 
