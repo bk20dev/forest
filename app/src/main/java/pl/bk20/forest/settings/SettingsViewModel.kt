@@ -1,6 +1,5 @@
 package pl.bk20.forest.settings
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -42,7 +41,6 @@ class SettingsViewModel(
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            Log.d("SettingsViewModel", "Creating")
             val application = checkNotNull(extras[APPLICATION_KEY]) as ForestApplication
 
             val settingsStore = application.settingsStore
