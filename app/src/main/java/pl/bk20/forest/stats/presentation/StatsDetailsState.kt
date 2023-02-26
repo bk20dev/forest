@@ -9,4 +9,5 @@ data class StatsDetailsState(
     val calorieBurned: Int,
     val distanceTravelled: Double,
     val carbonDioxideSaved: Double,
+    val chartDateRange: ClosedRange<LocalDate>
 )

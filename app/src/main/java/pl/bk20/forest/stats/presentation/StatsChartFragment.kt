@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter
 class StatsChartFragment : Fragment() {
 
     private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel.Factory }
-    private val statsChartViewModel: StatsChartViewModel by activityViewModels { StatsChartViewModel.Factory }
 
     private lateinit var binding: FragmentStatsChartBinding
     private lateinit var chartPageAdapter: ChartPageAdapter
@@ -45,14 +44,8 @@ class StatsChartFragment : Fragment() {
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                val selectedDate = statsDetailsViewModel.day
-                val dateRange = statsChartViewModel.dataset
-
-                launch {
-                    selectedDate.collect { updateUserInterface(it.date, dateRange.value.dateRange) }
-                }
-                launch {
-                    dateRange.collect { updateUserInterface(selectedDate.value.date, it.dateRange) }
+                statsDetailsViewModel.day.collect {
+                    updateUserInterface(it.date, it.chartDateRange)
                 }
             }
         }
@@ -97,9 +90,7 @@ class StatsChartFragment : Fragment() {
         override fun createFragment(position: Int): Fragment {
             val fragment = StatsChartPageFragment()
             fragment.arguments = Bundle().apply {
-                val daysToSubtract = position * 7 + 6
-                val date = dateRange.endInclusive.minusDays(daysToSubtract.toLong())
-                putSerializable(StatsChartPageFragment.ARG_FIRST_DAY, date)
+                putLong(StatsChartPageFragment.ARG_PAGE_NUMBER, position.toLong())
             }
             return fragment
         }

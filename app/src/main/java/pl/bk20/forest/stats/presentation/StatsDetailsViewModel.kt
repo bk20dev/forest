@@ -7,16 +7,19 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
 import pl.bk20.forest.core.domain.usecase.DayUseCases
 import pl.bk20.forest.settings.data.repository.SettingsRepositoryImpl
+import pl.bk20.forest.stats.domain.usecase.StatsDetailsUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
 
 class StatsDetailsViewModel(
     private val dayUseCases: DayUseCases,
-    initialDate: LocalDate
+    statsDetailsUseCases: StatsDetailsUseCases,
+    currentDateFlow: StateFlow<LocalDate>
 ) : ViewModel() {
 
     private val _day = MutableStateFlow(
@@ -27,16 +30,26 @@ class StatsDetailsViewModel(
             calorieBurned = 0,
             distanceTravelled = 0.0,
             carbonDioxideSaved = 0.0,
+            chartDateRange = currentDateFlow.value..currentDateFlow.value
         )
     )
-
     val day: StateFlow<StatsDetailsState> = _day.asStateFlow()
 
-    private var selectDateJob: Job? = null
-
     init {
-        selectDay(initialDate)
+        selectDay(currentDateFlow.value)
+
+        viewModelScope.launch {
+            val firstDateFlow = statsDetailsUseCases.getFirstDate()
+            firstDateFlow
+                .combine(currentDateFlow) { firstDate, currentDate ->
+                    firstDate..currentDate
+                }.collect { dateRange ->
+                    _day.value = day.value.copy(chartDateRange = dateRange)
+                }
+        }
     }
+
+    private var selectDateJob: Job? = null
 
     fun selectDay(date: LocalDate) {
         selectDateJob?.cancel()
@@ -63,9 +76,13 @@ class StatsDetailsViewModel(
             val settingsStore = application.settingsStore
             val settingsRepository = SettingsRepositoryImpl(settingsStore)
             val dayUseCases = DayUseCases(dayRepository, settingsRepository)
-            val initialDate = application.currentDate.value
+            val statsDetailsUseCases = StatsDetailsUseCases(dayRepository)
 
-            return StatsDetailsViewModel(dayUseCases, initialDate) as T
+            return StatsDetailsViewModel(
+                dayUseCases,
+                statsDetailsUseCases,
+                application.currentDate
+            ) as T
         }
     }
 }

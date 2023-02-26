@@ -10,26 +10,27 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import pl.bk20.forest.core.domain.model.Day
 import pl.bk20.forest.databinding.FragmentStatsPageChartBinding
+import pl.bk20.forest.stats.util.toChartValues
 import java.lang.Integer.max
 import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.*
-import com.google.android.material.R as RMaterial
 
 class StatsChartPageFragment : Fragment() {
 
     companion object {
-        const val ARG_FIRST_DAY = "__first_day"
+        const val ARG_PAGE_NUMBER = "__page_number"
     }
 
     private lateinit var binding: FragmentStatsPageChartBinding
 
-    private val viewModel: StatsChartViewModel by viewModels { StatsChartViewModel }
-    private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel }
+    private val statsChartPageViewModel: StatsChartPageViewModel by viewModels { StatsChartPageViewModel.Factory }
+    private val statsDetailsViewModel: StatsDetailsViewModel by activityViewModels { StatsDetailsViewModel.Factory }
+
+    private var pageNumber: Long = 0
 
     private val chartAdapter = ChartAdapter {
         statsDetailsViewModel.selectDay(it.id)
@@ -37,49 +38,7 @@ class StatsChartPageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        @Suppress("DEPRECATION")
-        val firstDay = arguments?.getSerializable(ARG_FIRST_DAY) as LocalDate?
-        firstDay?.let { viewModel.selectWeek(firstDay) }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                val datasetFlow = viewModel.dataset
-                val dayFlow = statsDetailsViewModel.day
-
-                datasetFlow.combine(dayFlow) { dataset, day ->
-                    val selectedWeek = dataset.week
-                    val highestChartValue = selectedWeek.maxOfOrNull { max(it.steps, it.goal) } ?: 1
-                    val locale = resources.configuration.locales[0]
-                    selectedWeek.toChartValues(highestChartValue, locale, day.date)
-                }.collect {
-                    chartAdapter.submitList(it)
-                }
-            }
-        }
-    }
-
-    private fun List<Day>.toChartValues(
-        max: Int,
-        locale: Locale,
-        activeDay: LocalDate
-    ): List<ChartAdapter.ChartValue<LocalDate>> = map {
-        val value = it.steps / max.toDouble()
-        val weekdayName = it.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale)
-        val isSelected = it.date.isEqual(activeDay)
-        val barColor =
-            if (isSelected) RMaterial.attr.colorPrimary
-            else RMaterial.attr.colorPrimaryContainer
-        val textColor =
-            if (isSelected) RMaterial.attr.colorPrimary
-            else RMaterial.attr.colorAccent
-        ChartAdapter.ChartValue(
-            it.date,
-            value = value,
-            label = weekdayName,
-            barColor = barColor,
-            textColor = textColor
-        )
+        pageNumber = arguments?.getLong(ARG_PAGE_NUMBER) ?: 0
     }
 
     override fun onCreateView(
@@ -95,5 +54,35 @@ class StatsChartPageFragment : Fragment() {
         binding.recyclerViewChart.apply {
             adapter = chartAdapter
         }
+
+        lifecycleScope.launch {
+            val activeDayFlow = statsDetailsViewModel.day
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                launch {
+                    val weekFlow = statsChartPageViewModel.week
+                    weekFlow.combine(activeDayFlow) { week, activeDay ->
+                        updateUserInterface(week, activeDay.date)
+                    }.collect()
+                }
+                launch {
+                    activeDayFlow.collect {
+                        updateSelectedWeek(it.chartDateRange.endInclusive)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateUserInterface(week: List<Day>, activeDate: LocalDate) {
+        val highestChartValue = week.maxOfOrNull { max(it.steps, it.goal) } ?: 1
+        val locale = resources.configuration.locales[0]
+        val chartValues = week.toChartValues(highestChartValue, locale, activeDate)
+        chartAdapter.submitList(chartValues)
+    }
+
+    private fun updateSelectedWeek(lastDate: LocalDate) {
+        val daysToSubtract = 7 * pageNumber + 6
+        val firstDate = lastDate.minusDays(daysToSubtract)
+        statsChartPageViewModel.selectWeek(firstDate)
     }
 }
