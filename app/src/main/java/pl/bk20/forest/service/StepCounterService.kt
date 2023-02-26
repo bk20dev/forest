@@ -53,15 +53,15 @@ class StepCounterService : LifecycleService(), SensorEventListener {
         registerStepCounter(sensorManager)
 
         // Initialise controller
-        val forestApplication = application as ForestApplication
+        val application = application as ForestApplication
 
-        val settingsStore = forestApplication.settingsStore
+        val settingsStore = application.settingsStore
         val settingsRepository = SettingsRepositoryImpl(settingsStore)
-        val dayDatabase = forestApplication.forestDatabase
+        val dayDatabase = application.forestDatabase
         val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
         val dayUseCases = DayUseCases(dayRepository, settingsRepository)
 
-        controller = StepCounterController(dayUseCases, lifecycleScope)
+        controller = StepCounterController(dayUseCases, lifecycleScope, application.currentDate)
 
         // Create notification
         val notification = createNotification(controller.stats.value)

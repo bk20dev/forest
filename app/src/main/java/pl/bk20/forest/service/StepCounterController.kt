@@ -3,6 +3,7 @@ package pl.bk20.forest.service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import pl.bk20.forest.core.domain.usecase.DayUseCases
 import java.time.LocalDate
 import kotlin.math.roundToInt
@@ -10,7 +11,7 @@ import kotlin.math.roundToInt
 class StepCounterController(
     private val dayUseCases: DayUseCases,
     private val coroutineScope: CoroutineScope,
-    initialDate: LocalDate = LocalDate.now()
+    currentDateFlow: StateFlow<LocalDate>,
 ) {
 
     private val _stats = MutableStateFlow(StepCounterState(LocalDate.now(), 0, 0, 0.0, 0))
@@ -19,7 +20,9 @@ class StepCounterController(
     private var getStatsJob: Job? = null
 
     init {
-        getStats(initialDate)
+        coroutineScope.launch {
+            currentDateFlow.collect { getStats(it) }
+        }
     }
 
     private fun getStats(date: LocalDate) {
