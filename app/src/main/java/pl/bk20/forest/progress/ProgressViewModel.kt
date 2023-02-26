@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import pl.bk20.forest.ForestApplication
 import pl.bk20.forest.core.data.repository.DayRepositoryImpl
 import pl.bk20.forest.core.domain.usecase.DayUseCases
@@ -16,7 +17,7 @@ import kotlin.math.roundToInt
 
 class ProgressViewModel(
     private val dayUseCases: DayUseCases,
-    initialDate: LocalDate = LocalDate.now()
+    private val currentDateFlow: StateFlow<LocalDate>
 ) : ViewModel() {
 
     private val _progress = MutableStateFlow(
@@ -34,7 +35,11 @@ class ProgressViewModel(
     private var getProgressJob: Job? = null
 
     init {
-        getProgress(initialDate)
+        viewModelScope.launch {
+            currentDateFlow.collect { date ->
+                getProgress(date)
+            }
+        }
     }
 
     private fun getProgress(date: LocalDate) {
@@ -63,8 +68,9 @@ class ProgressViewModel(
             val dayDatabase = application.forestDatabase
             val dayRepository = DayRepositoryImpl(dayDatabase.dayDao)
             val dayUseCases = DayUseCases(dayRepository, settingsRepository)
+            val currentDateFlow = application.currentDate
 
-            return ProgressViewModel(dayUseCases) as T
+            return ProgressViewModel(dayUseCases, currentDateFlow) as T
         }
     }
 }
