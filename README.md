@@ -1,6 +1,6 @@
 # Forest
 
-Track your daily step count, stay healthy and fight the climate change
+Track your daily step count, stay healthy and fight the climate change, one step at a time.
 
 ![banner](https://user-images.githubusercontent.com/60577942/221682753-a0251f61-63e0-4ae9-bb40-2854864cebc3.jpg)
 
