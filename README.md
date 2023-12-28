@@ -11,12 +11,12 @@ Track your daily step count, stay healthy and fight the climate change, one step
   - [🦁 Table of Contents](#-table-of-contents)
   - [🌳 Inspiration](#-inspiration)
   - [🥕 Features](#-features)
-  - [🐻‍❄️ Instalation and First Launch](#️-instalation-and-first-launch)
+  - [🐻‍❄️ Installation and First Launch](#️-instalation-and-first-launch)
   - [🪴 Technologies](#-technologies)
 
 ## 🌳 Inspiration
 
-A couple years ago together with my friends I took a part in a programming competition. The objective was to build a mobile app that solves a global problem. We didn't win, but the app we built quickly spreaded in our families.
+A couple years ago together with my friends I took a part in a programming competition. The objective was to build a mobile app that solves a global problem. We didn't win, but the app we built quickly spread in our families.
 
 ## 🥕 Features
 
@@ -24,19 +24,19 @@ A couple years ago together with my friends I took a part in a programming compe
 
 <br />
 
-- Track the step count, burned calories, distance travelled and CO₂ saved
-- Get rewarded by completing your daily goal and keep motivated
-- Use a handful notification with your daily stats updated live
+- Track your step count, burnt calories, distance travelled and CO₂ saved
+- Get rewarded by completing your daily goal and stay motivated
+- View handy notifications with, daily stats updated live
 - View a daily history of your progress
-- View a detailed summary of your all-time progress
+- View a detailed summary of your overall progress
 
 ## 🐻‍❄️ Instalation and First Launch
 
 1. Download the latest prebuilt binary (.apk file) from [Releases](https://github.com/bk20dev/forest/releases)
 2. Run the downloaded file and temporarily allow instalation from unknown sources if prompted (turn it back off after installation).
 3. Click "Install" and wait for the app to install.
-4. On some devices you may encounter a Play Protect warning, but don't worry - this app is safe to use. I'm just an unverified developer (sorry).
-5. You are good to go 🚀.
+4. On some devices you may encounter a Play Protect warning, but don't worry - the app is safe to use, and open-sourced. I'm just an unverified developer.
+5. You are now good to go 🚀.
 
 🚨 **Heads up!** On most devices you'll need to **turn off the app battery optimizations** for the app to count steps accurately. Forest uses a minimal amount of power and it won't impact your battery life.
 
