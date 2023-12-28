@@ -16,7 +16,7 @@ Track your daily step count, stay healthy and fight the climate change, one step
 
 ## 🌳 Inspiration
 
-A couple years ago together with my friends I took a part in a programming competition. The objective was to build a mobile app that solves a global problem. We didn't win, but the app we built quickly spread in our families.
+A couple of years ago together with my friends, I took a part in a programming competition. The objective was to build a mobile app that solves a global problem. We didn't win, but the app we built quickly spread in our families.
 
 ## 🥕 Features
 
@@ -30,7 +30,7 @@ A couple years ago together with my friends I took a part in a programming compe
 - View a daily history of your progress
 - View a detailed summary of your overall progress
 
-## 🐻‍❄️ Instalation and First Launch
+## 🐻‍❄️ Installation and First Launch
 
 1. Download the latest prebuilt binary (.apk file) from [Releases](https://github.com/bk20dev/forest/releases)
 2. Run the downloaded file and temporarily allow instalation from unknown sources if prompted (turn it back off after installation).
