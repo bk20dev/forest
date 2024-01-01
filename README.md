@@ -26,7 +26,7 @@ A couple of years ago together with my friends, I took a part in a programming c
 
 - Track your step count, burnt calories, distance travelled and CO₂ saved
 - Get rewarded by completing your daily goal and stay motivated
-- View handy notifications with, daily stats updated live
+- Get handy notifications when your daily stats get updated
 - View a daily history of your progress
 - View a detailed summary of your overall progress
 
