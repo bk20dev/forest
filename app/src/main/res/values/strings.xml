@@ -81,4 +81,7 @@
     <string name="github" translatable="false">GitHub</string>
     <string name="github_summary">Check out our GitHub repository and help us improve the app</string>
     <string name="github_repository_url" translatable="false">https://github.com/bk20dev/forest</string>
+    <string name="version">Version: v1.0.0</string>
+    <string name="version_summary">The current version of the app</string>
+    <string name="github_releases_url" translatable="false">https://github.com/bk20dev/forest/releases</string>
 </resources>
