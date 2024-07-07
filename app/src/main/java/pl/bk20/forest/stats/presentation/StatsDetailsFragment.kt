@@ -52,7 +52,9 @@ class StatsDetailsFragment : Fragment() {
         )
         binding.apply {
             textStepCount.text = stepsText
-            viewGroupTree.isVisible = treeCollected
+            textTreeCollected.text = resources.getQuantityString(
+                R.plurals.trees_collected_format, treesCollected, treesCollected
+            )
             textCalorieBurned.text = calorieText
             textDistanceTravelled.text = distanceText
             textCarbonDioxideSaved.text = carbonDioxideText

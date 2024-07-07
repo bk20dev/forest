@@ -124,18 +124,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="2dp"
-                        android:text="@string/tree_collected"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         app:layout_constraintBottom_toTopOf="@+id/text_tree_collected_label"
                         app:layout_constraintStart_toEndOf="@+id/view_tree_background"
                         app:layout_constraintTop_toTopOf="@+id/view_tree_background"
-                        app:layout_constraintVertical_chainStyle="packed" />
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23 trees"/>
 
                     <TextView
                         android:id="@+id/text_tree_collected_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/daily_goal_reached"
+                        android:text="@string/trees_collected"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
                         app:layout_constraintStart_toStartOf="@+id/text_tree_collected"
