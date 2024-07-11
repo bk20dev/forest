@@ -41,6 +41,11 @@ data class Day(
         get() = run {
             steps * 0.1925 / 1000.0
         }
+
+    val treesCollected
+        get() = run {
+            steps / goal
+        }
 }
 
 fun Day.Companion.of(date: LocalDate, settings: Settings, steps: Int = 0): Day {

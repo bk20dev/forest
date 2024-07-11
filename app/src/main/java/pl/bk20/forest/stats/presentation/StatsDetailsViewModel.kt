@@ -57,7 +57,7 @@ class StatsDetailsViewModel(
             _day.value = day.value.copy(
                 date = it.date,
                 stepsTaken = it.steps,
-                treesCollected = it.steps / it.goal,
+                treesCollected = it.treesCollected,
                 calorieBurned = it.calorieBurned.roundToInt(),
                 distanceTravelled = it.distanceTravelled,
                 carbonDioxideSaved = it.carbonDioxideSaved

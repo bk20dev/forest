@@ -119,7 +119,7 @@
                         app:tint="?attr/colorOnSecondary" />
 
                     <TextView
-                        android:id="@+id/text_tree_collected"
+                        android:id="@+id/text_trees_collected"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -138,8 +138,8 @@
                         android:text="@string/trees_collected"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         app:layout_constraintBottom_toBottomOf="@+id/view_tree_background"
-                        app:layout_constraintStart_toStartOf="@+id/text_tree_collected"
-                        app:layout_constraintTop_toBottomOf="@+id/text_tree_collected"
+                        app:layout_constraintStart_toStartOf="@+id/text_trees_collected"
+                        app:layout_constraintTop_toBottomOf="@+id/text_trees_collected"
                         app:layout_constraintVertical_chainStyle="packed" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
