@@ -9,7 +9,7 @@ import java.time.LocalDate
 @Dao
 interface DayDao {
 
-    @Query("SELECT COUNT(*) FROM day WHERE steps >= goal")
+    @Query("SELECT SUM(steps/goal) FROM day WHERE steps >= goal")
     fun getTreeCount(): Flow<Int>
 
     @Query("SELECT * FROM day ORDER BY date ASC LIMIT 1")

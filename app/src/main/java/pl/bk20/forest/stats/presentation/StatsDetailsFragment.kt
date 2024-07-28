@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -41,6 +40,9 @@ class StatsDetailsFragment : Fragment() {
         val stepsText = resources.getQuantityString(
             R.plurals.step_count_format, stepsTaken, stepsTaken
         )
+        val treesText = resources.getQuantityString(
+            R.plurals.trees_collected_format, treesCollected, treesCollected
+        )
         val calorieText = getString(
             R.string.calorie_burned_format, calorieBurned
         )
@@ -52,7 +54,7 @@ class StatsDetailsFragment : Fragment() {
         )
         binding.apply {
             textStepCount.text = stepsText
-            viewGroupTree.isVisible = treeCollected
+            textTreesCollected.text = treesText
             textCalorieBurned.text = calorieText
             textDistanceTravelled.text = distanceText
             textCarbonDioxideSaved.text = carbonDioxideText
