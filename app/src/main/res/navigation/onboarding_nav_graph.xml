@@ -16,7 +16,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="pl.bk20.forest.core.presentation.MainActivity"
+        android:name="pl.bk20.forest.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 </navigation>

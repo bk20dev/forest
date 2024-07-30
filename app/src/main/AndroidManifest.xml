@@ -23,6 +23,18 @@
         android:theme="@style/Theme.Forest"
         tools:targetApi="31">
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- TODO: Review the following -->
+
         <service android:name=".service.StepCounterService" />
 
         <receiver
@@ -35,25 +47,15 @@
 
         <activity
             android:name=".core.presentation.SplashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".core.presentation.OnboardingActivity"
             android:exported="false" />
         <activity
-            android:name=".core.presentation.MainActivity"
-            android:exported="true"
-            android:launchMode="singleInstance" />
-        <activity
             android:name=".settings.SettingsActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:parentActivityName=".core.presentation.MainActivity" />
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
