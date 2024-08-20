@@ -113,7 +113,7 @@ class ActivityTrackerService : ViewModelLifecycleService() {
         private fun updateStepCount(newStepCountTotal: Int, timestamp: Instant) {
             previousStepCount?.let {
                 val deltaStepCount = newStepCountTotal - it
-                // TODO: Call viewModel.incrementStepCount(deltaStepCount, timestamp)
+                viewModel.incrementStepCount(deltaStepCount, timestamp)
             }
             previousStepCount = newStepCountTotal
         }
