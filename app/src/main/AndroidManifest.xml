@@ -26,7 +26,8 @@
         <service
             android:name=".activity_tracker_service.service.ActivityTrackerService"
             android:exported="false"
-            android:foregroundServiceType="health" />
+            android:foregroundServiceType="health"
+            android:permission="android.permission.ACTIVITY_RECOGNITION" />
 
         <activity
             android:name=".MainActivity"

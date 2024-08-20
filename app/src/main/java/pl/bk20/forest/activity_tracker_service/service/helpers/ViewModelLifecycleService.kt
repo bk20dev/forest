@@ -17,8 +17,8 @@ open class ViewModelLifecycleService : LifecycleService(), ViewModelStoreOwner {
 
     @CallSuper
     override fun onDestroy() {
-        super.onDestroy()
         viewModelStore.clear()
+        super.onDestroy()
     }
 
     val defaultViewModelCreationExtras: CreationExtras
