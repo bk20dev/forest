@@ -23,6 +23,11 @@
         android:theme="@style/Theme.Forest"
         tools:targetApi="31">
 
+        <service
+            android:name=".activity_tracker_service.service.ActivityTrackerService"
+            android:exported="false"
+            android:foregroundServiceType="health" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
