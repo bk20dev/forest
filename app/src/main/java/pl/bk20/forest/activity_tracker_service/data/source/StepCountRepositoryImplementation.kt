@@ -1,4 +1,4 @@
-package pl.bk20.forest.activity_tracker_service.domain.model
+package pl.bk20.forest.activity_tracker_service.data.source
 
 import android.util.Log
 import pl.bk20.forest.activity_tracker_service.domain.repository.StepCountRepository
