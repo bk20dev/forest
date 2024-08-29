@@ -17,6 +17,8 @@ import pl.bk20.forest.R
 import pl.bk20.forest.activity_tracker_service.service.helpers.ViewModelLifecycleService
 import pl.bk20.forest.activity_tracker_service.service.helpers.viewModels
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 
 class ActivityTrackerService : ViewModelLifecycleService() {
@@ -100,8 +102,9 @@ class ActivityTrackerService : ViewModelLifecycleService() {
         override fun onSensorChanged(event: SensorEvent?) {
             event?.run {
                 val eventStepCount = values[0].toInt()
-                val eventInstant = eventTimestampNanosToInstant(timestamp)
-                updateStepCount(eventStepCount, eventInstant)
+                val timestamp = eventTimestampNanosToInstant(timestamp)
+                val localDate = timestamp.atZone(ZoneId.systemDefault()).toLocalDate()
+                updateStepCount(eventStepCount, timestamp, localDate)
             }
         }
 
@@ -110,10 +113,12 @@ class ActivityTrackerService : ViewModelLifecycleService() {
             return Instant.now().minusNanos(nanosecondsSinceEvent)
         }
 
-        private fun updateStepCount(newStepCountTotal: Int, timestamp: Instant) {
+        private fun updateStepCount(
+            newStepCountTotal: Int, timestamp: Instant, localDate: LocalDate
+        ) {
             previousStepCount?.let {
                 val deltaStepCount = newStepCountTotal - it
-                viewModel.incrementStepCount(deltaStepCount, timestamp)
+                viewModel.incrementStepCount(deltaStepCount, timestamp, localDate)
             }
             previousStepCount = newStepCountTotal
         }

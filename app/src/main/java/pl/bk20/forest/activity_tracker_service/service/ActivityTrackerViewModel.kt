@@ -8,15 +8,17 @@ import pl.bk20.forest.activity_tracker_service.data.source.StepCountRepositoryIm
 import pl.bk20.forest.activity_tracker_service.domain.usecase.ActivityTrackerUseCases
 import pl.bk20.forest.activity_tracker_service.domain.usecase.ActivityTrackerUseCasesImplementation
 import java.time.Instant
+import java.time.LocalDate
 
 class ActivityTrackerViewModel(
     private val activityTrackerUseCases: ActivityTrackerUseCases
 ) : ViewModel() {
 
-    fun incrementStepCount(deltaStepCount: Int, timestamp: Instant) {
+    fun incrementStepCount(deltaStepCount: Int, timestamp: Instant, localDate: LocalDate) {
         activityTrackerUseCases.updateFitnessMetricsForStepCountDelta(
             deltaStepCount = deltaStepCount,
-            timestamp = timestamp
+            timestamp = timestamp,
+            localDate = localDate,
         )
     }
 
