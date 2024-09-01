@@ -15,6 +15,9 @@ data class TimeBucket(
     val startLocalDate: LocalDate,
 )
 
+fun TimeBucket.beginsWith(other: TimeBucket): Boolean =
+    startTimestamp == other.startTimestamp && startLocalDate == other.startLocalDate
+
 fun TimeBucket.extendedWith(timestamp: Instant, localDate: LocalDate): TimeBucket {
     return copy(
         startTimestamp = minOf(startTimestamp, timestamp),
