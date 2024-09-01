@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import pl.bk20.forest.activity_tracker_service.data.source.StepCountRepositoryImplementation
+import pl.bk20.forest.activity_tracker_service.data.repository.StepCountRepositoryImplementation
 import pl.bk20.forest.activity_tracker_service.domain.usecase.ActivityTrackerUseCases
 import pl.bk20.forest.activity_tracker_service.domain.usecase.ActivityTrackerUseCasesImplementation
 import java.time.Instant
