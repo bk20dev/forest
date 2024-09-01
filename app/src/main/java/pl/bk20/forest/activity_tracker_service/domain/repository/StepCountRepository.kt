@@ -4,5 +4,6 @@ import java.time.Instant
 import java.time.LocalDate
 
 interface StepCountRepository {
+    suspend fun startStepCountEventAutosave()
     fun incrementStepCount(deltaStepCount: Int, timestamp: Instant, localDate: LocalDate)
 }
