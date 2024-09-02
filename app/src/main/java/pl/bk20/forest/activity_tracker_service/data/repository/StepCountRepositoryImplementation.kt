@@ -18,7 +18,7 @@ import pl.bk20.forest.activity_tracker_service.data.helpers.withPreviousValue
 import pl.bk20.forest.activity_tracker_service.data.model.IncrementStepCountEvent
 import pl.bk20.forest.activity_tracker_service.domain.repository.StepCountRepository
 import java.time.Instant
-import java.time.LocalDate
+import java.time.LocalDateTime
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.toJavaDuration
@@ -33,9 +33,11 @@ class StepCountRepositoryImplementation : StepCountRepository {
         Channel<IncrementStepCountEvent?>(capacity = Channel.UNLIMITED)
 
 
-    override fun incrementStepCount(deltaStepCount: Int, timestamp: Instant, localDate: LocalDate) {
+    override fun incrementStepCount(
+        deltaStepCount: Int, timestamp: Instant, localDateTime: LocalDateTime
+    ) {
         val incrementStepCountEvent = IncrementStepCountEvent(
-            deltaStepCount = deltaStepCount, timestamp = timestamp, localDate = localDate
+            deltaStepCount = deltaStepCount, timestamp = timestamp, localDateTime = localDateTime
         )
         incrementStepCountEventChannel.trySend(incrementStepCountEvent)
     }
@@ -81,7 +83,7 @@ class StepCountRepositoryImplementation : StepCountRepository {
     private fun TimeBucket.shouldExtendWith(
         event: IncrementStepCountEvent, window: Duration
     ): Boolean = when {
-        startLocalDate != event.localDate -> false
+        startLocalDateTime.toLocalDate() != event.localDateTime.toLocalDate() -> false
         event.timestamp.minus(window.toJavaDuration()).isAfter(endTimestamp) -> false
         event.timestamp.isBefore(startTimestamp) -> false
         else -> true
@@ -91,7 +93,7 @@ class StepCountRepositoryImplementation : StepCountRepository {
         return copy(
             timeBucket = timeBucket.extendedWith(
                 timestamp = event.timestamp,
-                localDate = event.localDate,
+                localDateTime = event.localDateTime,
             ),
             stepCount = stepCount + event.deltaStepCount,
         )
@@ -102,7 +104,7 @@ class StepCountRepositoryImplementation : StepCountRepository {
             timeBucket = TimeBucket(
                 startTimestamp = timestamp,
                 endTimestamp = timestamp,
-                startLocalDate = localDate,
+                startLocalDateTime = localDateTime,
             ), stepCount = deltaStepCount
         )
     }
