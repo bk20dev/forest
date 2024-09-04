@@ -14,7 +14,7 @@ import pl.bk20.forest.activity_tracker_service.data.entity.StepCountBucket
 import pl.bk20.forest.activity_tracker_service.data.entity.TimeBucket
 import pl.bk20.forest.activity_tracker_service.data.entity.beginsWith
 import pl.bk20.forest.activity_tracker_service.data.entity.extendedWith
-import pl.bk20.forest.activity_tracker_service.data.helpers.withPreviousValue
+import pl.bk20.forest.activity_tracker_service.data.repository.helpers.withPreviousValue
 import pl.bk20.forest.activity_tracker_service.data.model.IncrementStepCountEvent
 import pl.bk20.forest.activity_tracker_service.domain.repository.StepCountRepository
 import java.time.Instant

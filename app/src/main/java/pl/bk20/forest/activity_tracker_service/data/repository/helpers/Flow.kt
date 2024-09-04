@@ -1,4 +1,4 @@
-package pl.bk20.forest.activity_tracker_service.data.helpers
+package pl.bk20.forest.activity_tracker_service.data.repository.helpers
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
