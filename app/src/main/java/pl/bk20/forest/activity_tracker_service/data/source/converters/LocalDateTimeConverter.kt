@@ -7,14 +7,18 @@ import java.time.ZoneOffset
 @Suppress("unused")
 class LocalDateTimeConverter {
 
-    @TypeConverter
-    fun localDateTimeToEpochDay(dateTime: LocalDateTime): Long {
-        return dateTime.toEpochSecond(ZoneOffset.UTC)
+    companion object {
+        private val defaultZoneOffset = ZoneOffset.UTC
     }
 
     @TypeConverter
-    fun epochDayToLocalDateTime(epochSecondUtc: Long): LocalDateTime {
-        return LocalDateTime.ofEpochSecond(epochSecondUtc, 0, ZoneOffset.UTC)
+    fun localDateTimeToEpochSecond(localDateTime: LocalDateTime): Long {
+        return localDateTime.toEpochSecond(defaultZoneOffset)
+    }
+
+    @TypeConverter
+    fun epochSecondToLocalDateTime(epochSecondUtc: Long): LocalDateTime {
+        return LocalDateTime.ofEpochSecond(epochSecondUtc, 0, defaultZoneOffset)
     }
 }
 

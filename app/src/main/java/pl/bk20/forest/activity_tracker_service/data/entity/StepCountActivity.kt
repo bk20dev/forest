@@ -6,14 +6,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "activity_step_count")
-data class StepCountBucket(
+data class StepCountActivity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long = 0,
 
     @Embedded
-    val timeBucket: TimeBucket,
+    val activityTimeRange: ActivityTimeRange,
 
     @ColumnInfo(name = "step_count")
     val stepCount: Int
