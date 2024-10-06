@@ -1,5 +1,6 @@
 package pl.bk20.forest.activity_tracker_service.service
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -14,8 +15,12 @@ class ActivityTrackerViewModel(
     private val activityTrackerUseCases: ActivityTrackerUseCases
 ) : ViewModel() {
 
-    fun incrementStepCount(deltaStepCount: Int, timestamp: Instant, localDateTime: LocalDateTime) {
-        // TODO: Rewrite ActivityTrackerService to use a custom sensor class (to-do as well)
+    fun incrementStepCount(deltaStepCount: Int, instant: Instant, localDateTime: LocalDateTime) {
+        Log.d(
+            "ActivityTrackerViewModel",
+            "Incrementing step count (deltaStepCount=$deltaStepCount, instant=$instant, localDateTime=$localDateTime)"
+        )
+        // TODO: Implement time-based bucketing
         // TODO: Call activityTrackerUseCases.upsertStepCountActivity(stepCountActivity)
     }
 

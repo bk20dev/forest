@@ -4,21 +4,15 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
 import android.os.Build.VERSION_CODES
-import android.os.SystemClock
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import pl.bk20.forest.R
 import pl.bk20.forest.activity_tracker_service.service.helpers.ViewModelLifecycleService
 import pl.bk20.forest.activity_tracker_service.service.helpers.viewModels
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
+import pl.bk20.forest.activity_tracker_service.service.sensor.StepCounterSensor
 
 
 class ActivityTrackerService : ViewModelLifecycleService() {
@@ -33,11 +27,17 @@ class ActivityTrackerService : ViewModelLifecycleService() {
     private lateinit var notificationManager: NotificationManager
     private lateinit var sensorManager: SensorManager
 
+    private lateinit var stepCounterSensor: StepCounterSensor
+
     override fun onCreate() {
         super.onCreate()
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        stepCounterSensor = StepCounterSensor(
+            stepCountChangeListener = viewModel::incrementStepCount
+        )
 
         startActivityTrackerForegroundService()
         registerActivityTrackerEventListener()
@@ -67,8 +67,8 @@ class ActivityTrackerService : ViewModelLifecycleService() {
     }
 
     private fun createDailyProgressNotification(): Notification {
-        // @formatter:off
-        return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        return NotificationCompat
+            .Builder(this, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.nature_fill0_wght400_grad0_opsz24)
             .setContentTitle("Forest is running (and so are you)")
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -76,15 +76,10 @@ class ActivityTrackerService : ViewModelLifecycleService() {
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .build()
-        // @formatter:on
     }
 
     private fun registerActivityTrackerEventListener() {
-        sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)?.let { sensor ->
-            sensorManager.registerListener(
-                stepCounterEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL
-            )
-        }
+        stepCounterSensor.registerListener(sensorManager)
     }
 
     override fun onDestroy() {
@@ -93,36 +88,6 @@ class ActivityTrackerService : ViewModelLifecycleService() {
     }
 
     private fun stopActivityTrackerEventListener() {
-        sensorManager.unregisterListener(stepCounterEventListener)
-    }
-
-    private val stepCounterEventListener = object : SensorEventListener {
-        private var previousStepCount: Int? = null
-
-        override fun onSensorChanged(event: SensorEvent?) {
-            event?.run {
-                val eventStepCount = values[0].toInt()
-                val timestamp = eventTimestampNanosToInstant(timestamp)
-                val localDateTime = timestamp.atZone(ZoneId.systemDefault()).toLocalDateTime()
-                updateStepCount(eventStepCount, timestamp, localDateTime)
-            }
-        }
-
-        private fun eventTimestampNanosToInstant(eventTimestampNanos: Long): Instant {
-            val nanosecondsSinceEvent = SystemClock.elapsedRealtimeNanos() - eventTimestampNanos
-            return Instant.now().minusNanos(nanosecondsSinceEvent)
-        }
-
-        private fun updateStepCount(
-            newStepCountTotal: Int, timestamp: Instant, localDateTime: LocalDateTime
-        ) {
-            previousStepCount?.let {
-                val deltaStepCount = newStepCountTotal - it
-                viewModel.incrementStepCount(deltaStepCount, timestamp, localDateTime)
-            }
-            previousStepCount = newStepCountTotal
-        }
-
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+        stepCounterSensor.unregisterListener(sensorManager)
     }
 }
