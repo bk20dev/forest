@@ -15,7 +15,7 @@ fun interface OnStepCountChangeListener {
 
 class StepCounterSensor(
     private val stepCountChangeListener: OnStepCountChangeListener
-) : SensorEventListener, ActivitySensor {
+) : SensorEventListener {
 
     private var previousStepCountTotal: Int? = null
 
@@ -33,7 +33,7 @@ class StepCounterSensor(
         }
     }
 
-    override fun registerListener(sensorManager: SensorManager) {
+    fun registerListener(sensorManager: SensorManager) {
         sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)?.let { sensor ->
             sensorManager.registerListener(
                 this, sensor, SensorManager.SENSOR_DELAY_NORMAL
@@ -41,7 +41,7 @@ class StepCounterSensor(
         }
     }
 
-    override fun unregisterListener(sensorManager: SensorManager) {
+    fun unregisterListener(sensorManager: SensorManager) {
         sensorManager.unregisterListener(this)
     }
 

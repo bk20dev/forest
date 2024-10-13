@@ -122,6 +122,7 @@
       <option name="WRAP_FIRST_METHOD_IN_CALL_CHAIN" value="true" />
       <option name="PARAMETER_ANNOTATION_WRAP" value="2" />
       <option name="VARIABLE_ANNOTATION_WRAP" value="2" />
+      <option name="ENUM_CONSTANTS_WRAP" value="2" />
     </codeStyleSettings>
   </code_scheme>
 </component>
